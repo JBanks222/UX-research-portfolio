@@ -1,0 +1,129 @@
+/* === Global Styles === */
+body {
+    font-family: 'Segoe UI', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #111;
+    color: #eee;
+    line-height: 1.6;
+  }
+  
+  header {
+    background: #222;
+    padding: 20px;
+    text-align: center;
+  }
+  
+  h1, h2, h3 {
+    color: #00ffcc;
+    margin-bottom: 10px;
+  }
+  
+  h4 {
+    color: #90ee90;
+    margin-top: 20px;
+  }
+  
+  section {
+    padding: 20px;
+    margin: 15px;
+    background-color: #1e1e1e;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+  }
+  
+  ul {
+    list-style-type: none;
+    padding: 0;
+  }
+  
+  ul li {
+    margin-bottom: 10px;
+    padding-left: 20px;
+    position: relative;
+  }
+  
+  ul li::before {
+    content: "•";
+    color: #00ffcc;
+    position: absolute;
+    left: 0;
+  }
+  
+  p {
+    margin-bottom: 15px;
+  }
+  
+  /* === Version History Styles === */
+  .version-entry {
+    margin-bottom: 20px;
+  }
+  
+  .version-entry h4 {
+    color: #90ee90;
+    font-size: 18px;
+  }
+  
+  .date {
+    float: right;
+    font-weight: normal;
+    color: #ccc;
+    font-size: 14px;
+  }
+  
+  /* === Carousel Styles (Final Product Section) === */
+  .carousel-container {
+    position: relative;
+    width: 200px;
+    margin: 30px auto 10px auto;
+    text-align: center;
+  }
+  
+  #phone-frame {
+    width: 100%;
+    position: absolute;
+    z-index: 2;
+    pointer-events: none;
+  }
+  
+  #slide-image {
+    width: 80%;
+    position: relative;
+    z-index: 1;
+    top: 20px;
+    transition: all 0.5s ease-in-out;
+    border-radius: 10px;
+  }
+  
+  .carousel-buttons {
+    margin-top: 260px;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
+  
+  .carousel-buttons button {
+    background-color: #00ffcc;
+    border: none;
+    border-radius: 50%;
+    font-size: 22px;
+    width: 45px;
+    height: 45px;
+    cursor: pointer;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+    transition: background-color 0.3s;
+  }
+  
+  .carousel-buttons button:hover {
+    background-color: #00bfa6;
+  }
+  
+  /* === Footer === */
+  footer {
+    text-align: center;
+    padding: 20px;
+    background: #222;
+    font-size: 14px;
+    margin-top: 30px;
+  }
+  
