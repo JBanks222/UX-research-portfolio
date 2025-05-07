@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Responsibility Matrix - QCC Connect Redesign</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <style>
+    body {
+      background-color: #f8f9fa;
+      font-family: 'Segoe UI', sans-serif;
+      padding: 2rem;
+    }
+    .matrix-title {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+    .table thead {
+      background-color: #343a40;
+      color: #fff;
+    }
+    .category-badge {
+      font-size: 0.85rem;
+      padding: 0.25em 0.5em;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 class="matrix-title">Responsibility Matrix – QCC Connect App Redesign</h1>
+    <div class="table-responsive">
+      <table class="table table-bordered table-striped">
+        <thead>
+          <tr>
+            <th>Issue Category</th>
+            <th>Description</th>
+            <th>Team Responsible</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><span class="badge bg-primary category-badge">Performance</span></td>
+            <td>Slow loading, freezing, lag when switching tabs</td>
+            <td>Development / Engineering</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-success category-badge">UI/UX Design</span></td>
+            <td>Confusing layout, unclear buttons, poor visual hierarchy</td>
+            <td>UX Design / Product Design</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-warning text-dark category-badge">Features</span></td>
+            <td>Missing tools like transit tracker, campus map, digital ID</td>
+            <td>Product Management + Engineering</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-danger category-badge">Stability</span></td>
+            <td>App crashes, login bugs, random logouts, update issues</td>
+            <td>QA / Testing + Engineering</td>
+          </tr>
+          <tr>
+            <td><span class="badge bg-info text-dark category-badge">Usefulness</span></td>
+            <td>Lack of awareness, low engagement, unclear value to students</td>
+            <td>Marketing + UX Research</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</body>
+</html>
+

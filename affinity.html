@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>QCC Connect - Virtual Affinity Map</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', sans-serif;
+      background: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+      color: #222;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 20px;
+    }
+
+    .category {
+      background: #ffffff;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      padding: 20px;
+    }
+
+    .category h2 {
+      font-size: 1.2rem;
+      color: #333;
+      margin-bottom: 16px;
+    }
+
+    .sticky {
+      background: #fff8e1;
+      padding: 10px;
+      margin-bottom: 12px;
+      border-left: 6px solid;
+      border-radius: 5px;
+    }
+
+    .performance { border-left-color: #1e88e5; background-color: #e3f2fd; }
+    .uiux       { border-left-color: #8e24aa; background-color: #f3e5f5; }
+    .features   { border-left-color: #43a047; background-color: #e8f5e9; }
+    .stability  { border-left-color: #e53935; background-color: #ffebee; }
+    .usefulness { border-left-color: #fdd835; background-color: #fffde7; }
+  </style>
+</head>
+<body>
+
+  <h1>QCC Connect Affinity Map</h1>
+
+  <div class="grid">
+    
+    <!-- Performance -->
+    <div class="category">
+      <h2>📱 Performance</h2>
+      <div class="sticky performance">"Pages load very slowly, even when I have good signal. It makes it frustrating to check anything quickly."</div>
+      <div class="sticky performance">"There’s a noticeable delay when switching between tabs in the app."</div>
+      <div class="sticky performance">"The app freezes for a few seconds every time I open it. I usually end up force closing it."</div>
+      <div class="sticky performance">"Using the app on public Wi-Fi is almost impossible—it just hangs."</div>
+      <div class="sticky performance">"It often takes longer to open than just going to the campus website."</div>
+    </div>
+
+    <!-- UI/UX -->
+    <div class="category">
+      <h2>🎨 UI/UX Design</h2>
+      <div class="sticky uiux">"The layout is confusing. I always forget where certain features are."</div>
+      <div class="sticky uiux">"Some buttons don’t look like buttons—it’s hard to tell what’s clickable."</div>
+      <div class="sticky uiux">"I had to tap through several screens just to get back to the homepage. It’s not intuitive."</div>
+      <div class="sticky uiux">"The schedule section feels cluttered. It’s hard to read when I’m in a rush."</div>
+      <div class="sticky uiux">"There’s no clear hierarchy on most pages. Everything looks the same in size and color."</div>
+    </div>
+
+    <!-- Features -->
+    <div class="category">
+      <h2>🛠️ Features</h2>
+      <div class="sticky features">"It would be useful to see the bus schedule directly in the app instead of being redirected to a browser."</div>
+      <div class="sticky features">"The campus map is too basic—it’s hard to locate classrooms or services."</div>
+      <div class="sticky features">"I wish I could see my student ID without having to go through multiple steps."</div>
+      <div class="sticky features">"There’s no real customization. I only use 2 or 3 features but have to scroll through everything."</div>
+      <div class="sticky features">"It’s missing practical features like reminders or push alerts for deadlines."</div>
+    </div>
+
+    <!-- Stability -->
+    <div class="category">
+      <h2>🧱 Stability</h2>
+      <div class="sticky stability">"Sometimes the app logs me out randomly, even if I just used it the day before."</div>
+      <div class="sticky stability">"It crashed when I was trying to look up my course list. I had to restart it twice."</div>
+      <div class="sticky stability">"There were multiple times I couldn’t log in because of a server error."</div>
+      <div class="sticky stability">"The app becomes unresponsive if I switch to another app and return."</div>
+      <div class="sticky stability">"Updates seem to break more things than they fix. After the last update, I couldn’t access my ID."</div>
+    </div>
+
+    <!-- Usefulness -->
+    <div class="category">
+      <h2>💡 Usefulness</h2>
+      <div class="sticky usefulness">"The app has potential, but I only use it for one or two things because the rest is hard to navigate."</div>
+      <div class="sticky usefulness">"It doesn't really add much beyond what I can already get from the website."</div>
+      <div class="sticky usefulness">"It took me weeks to realize it even had an event calendar. Nothing highlights the features well."</div>
+      <div class="sticky usefulness">"I downloaded it during orientation but stopped using it soon after."</div>
+      <div class="sticky usefulness">"Most of my classmates don’t even know the app exists. It doesn’t feel essential."</div>
+    </div>
+
+  </div>
+
+</body>
+</html>

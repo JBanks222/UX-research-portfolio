@@ -1,0 +1,2561 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jalen Banks | UX Research Portfolio</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+    
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+        :root {
+            --primary: #7B61FF;
+            --secondary: #00F5A0;
+            --dark: #0A0A0A;
+            --light: #F5F5F5;
+            --gray: #2A2A2A;
+            --accent: #FF61F5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Space Grotesk', sans-serif;
+            background-color: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(123, 97, 255, 0.1) 0%, rgba(10, 10, 10, 0) 70%);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero h2 {
+            font-size: 1.5rem;
+            color: var(--light);
+            opacity: 0.8;
+            margin-bottom: 2rem;
+        }
+
+        /* Sections */
+        .section {
+            padding: 6rem 0;
+            position: relative;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        /* Cards */
+        .card {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Feature List */
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            margin-bottom: 1.5rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        /* Carousel */
+        .carousel {
+            position: relative;
+            max-width: 320px;
+            margin: 2rem auto;
+            background: #1A1A1A;
+            border-radius: 30px;
+            padding: 12px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4), 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .carousel-screen {
+            width: 100%;
+            aspect-ratio: 9 / 19;
+            background-color: #000;
+            border-radius: 20px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .carousel-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+            border-radius: 20px;
+            transition: opacity 0.4s ease-in-out;
+        }
+
+        .carousel-nav {
+            position: absolute;
+            bottom: -60px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 1.2rem;
+            z-index: 10;
+        }
+
+        .carousel-nav button {
+            background: var(--primary);
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            color: var(--dark);
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .carousel-nav button:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+         .carousel-nav button:last-of-type:hover {
+            background: var(--secondary);
+            transform: scale(1.1);
+        }
+
+        /* Data Visualization */
+        .chart-container {
+            background: rgba(42, 42, 42, 0.5);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            height: 400px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chart-container canvas {
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--gray);
+            padding: 3rem 0;
+            text-align: center;
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 2rem;
+        }
+
+        .social-links a {
+            color: var(--light);
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--primary);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .section {
+                padding: 4rem 0;
+            }
+
+            .section-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Timeline Styles */
+        .timeline {
+            position: relative;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 3rem;
+            width: 50%;
+            padding: 0 2rem;
+        }
+
+        .timeline-item:nth-child(odd) {
+            margin-left: 50%;
+        }
+
+        .timeline-item:nth-child(even) {
+            margin-left: 0;
+            padding-right: 2rem;
+        }
+
+        .timeline-content {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            position: relative;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .timeline-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .timeline-content::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            transform: translateY(-50%);
+        }
+
+        .timeline-item:nth-child(odd) .timeline-content::before {
+            left: -30px;
+        }
+
+        .timeline-item:nth-child(even) .timeline-content::before {
+            right: -30px;
+        }
+
+        .timeline-phase {
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .timeline-week {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-weight: 500;
+        }
+
+        .timeline-tasks {
+            list-style: none;
+        }
+
+        .timeline-tasks li {
+            margin-bottom: 0.75rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        @media (max-width: 768px) {
+            .timeline::before {
+                left: 20px;
+            }
+
+            .timeline-item {
+                width: 100%;
+                margin-left: 0 !important;
+                padding-left: 3rem;
+            }
+
+            .timeline-content::before {
+                left: -30px !important;
+                right: auto !important;
+            }
+        }
+
+        /* Research Goals Styles */
+        .research-goals {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .goal-card {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .goal-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .goal-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .goal-number {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .goal-text {
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        .goals-section {
+            position: relative;
+        }
+
+        .goals-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(123, 97, 255, 0.05) 0%, rgba(10, 10, 10, 0) 70%);
+            pointer-events: none;
+        }
+
+        /* User Insights Styles */
+        .insights-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .insight-category {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .insight-category:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .insight-header {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .insight-icon {
+            font-size: 1.5rem;
+        }
+
+        .insight-title {
+            font-size: 1.3rem;
+            color: var(--primary);
+            margin: 0;
+        }
+
+        .insight-quote {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.2rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border-left: 4px solid;
+            transition: all 0.3s ease;
+        }
+
+        .insight-quote:hover {
+            transform: translateX(5px);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .performance .insight-quote { border-left-color: var(--primary); }
+        .uiux .insight-quote { border-left-color: var(--accent); }
+        .features .insight-quote { border-left-color: var(--secondary); }
+        .stability .insight-quote { border-left-color: #FF6B6B; }
+        .usefulness .insight-quote { border-left-color: #FFD700; }
+
+        .insight-quote p {
+            margin: 0;
+            font-style: italic;
+            color: var(--light);
+            line-height: 1.6;
+        }
+
+        /* Responsibility Matrix Styles */
+        .matrix-container {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-top: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .matrix-table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0;
+            margin-top: 1.5rem;
+        }
+
+        .matrix-table th {
+            background: rgba(123, 97, 255, 0.1);
+            color: var(--primary);
+            padding: 1.2rem;
+            text-align: left;
+            font-weight: 600;
+            border-bottom: 2px solid rgba(123, 97, 255, 0.2);
+        }
+
+        .matrix-table td {
+            padding: 1.2rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: var(--light);
+        }
+
+        .matrix-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .matrix-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .category-badge {
+            display: inline-block;
+            padding: 0.4rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin-right: 0.5rem;
+        }
+
+        .badge-performance {
+            background: rgba(123, 97, 255, 0.2);
+            color: var(--primary);
+        }
+
+        .badge-uiux {
+            background: rgba(255, 97, 245, 0.2);
+            color: var(--accent);
+        }
+
+        .badge-features {
+            background: rgba(0, 245, 160, 0.2);
+            color: var(--secondary);
+        }
+
+        .badge-stability {
+            background: rgba(255, 107, 107, 0.2);
+            color: #FF6B6B;
+        }
+
+        .badge-usefulness {
+            background: rgba(255, 215, 0, 0.2);
+            color: #FFD700;
+        }
+
+        .team-tag {
+            display: inline-block;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            font-size: 0.85rem;
+            color: var(--light);
+            margin: 0.2rem;
+        }
+
+        /* Problem Statements Styles */
+        .problems-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .problem-card {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .problem-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+        }
+
+        .problem-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .problem-number {
+            font-size: 1.2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .problem-number::before {
+            content: '';
+            width: 20px;
+            height: 20px;
+            background: var(--primary);
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .problem-title {
+            font-size: 1.3rem;
+            color: var(--light);
+            margin-bottom: 1rem;
+            font-weight: 600;
+        }
+
+        .problem-description {
+            color: var(--light);
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .problems-section {
+            position: relative;
+        }
+
+        .problems-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 50%, rgba(123, 97, 255, 0.05) 0%, rgba(10, 10, 10, 0) 70%);
+            pointer-events: none;
+        }
+
+        /* Sketch Section Styles */
+        .sketches-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Responsive grid */
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .sketch-card {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+            aspect-ratio: 4 / 3; /* Common aspect ratio for images */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .sketch-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .sketch-placeholder-icon {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .sketch-placeholder-text {
+            color: var(--light);
+            opacity: 0.8;
+        }
+
+        /* Wireframe Specific Styles */
+        .wireframe-container {
+            background-color: #333; /* Darker background for the wireframe card */
+            border: 1px solid #444;
+            border-radius: 12px;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .wireframe-screen {
+            background-color: #E0E0E0; /* Light gray for the screen */
+            width: 280px; /* Fixed width for consistency */
+            height: 500px; /* Fixed height */
+            border-radius: 16px;
+            border: 3px solid #555; /* Darker border for the phone outline */
+            padding: 15px;
+            box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            overflow: hidden; /* Clip content */
+        }
+
+        .wf-header, .wf-footer {
+            background-color: #C0C0C0; /* Medium gray */
+            height: 40px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10px;
+        }
+
+        .wf-content-area {
+            background-color: #D0D0D0; /* Slightly lighter gray */
+            flex-grow: 1;
+            border-radius: 6px;
+            padding: 10px;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            overflow-y: auto; /* For scrollable content example */
+        }
+
+        .wf-nav-item {
+            background-color: #B0B0B0;
+            width: 30px;
+            height: 30px;
+            border-radius: 4px;
+        }
+        .wf-title-placeholder {
+            background-color: #A0A0A0; /* Darker gray for titles */
+            height: 20px;
+            width: 60%;
+            border-radius: 4px;
+            margin: 5px auto; /* Center title placeholder */
+        }
+        .wf-text-line {
+            background-color: #BDBDBD;
+            height: 10px;
+            border-radius: 3px;
+            margin-bottom: 5px;
+        }
+        .wf-text-line.short { width: 60%; }
+        .wf-text-line.medium { width: 80%; }
+
+        .wf-image-placeholder {
+            background-color: #B0B0B0;
+            width: 100%;
+            height: 120px;
+            border-radius: 6px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #777;
+            font-size: 2rem;
+            font-family: monospace;
+        }
+
+        .wf-card {
+            background-color: #C8C8C8;
+            padding: 10px;
+            border-radius: 6px;
+            border: 1px solid #BBB;
+        }
+
+        .wf-button {
+            background-color: #A0A0A0;
+            color: #FFF;
+            padding: 8px 12px;
+            border-radius: 6px;
+            text-align: center;
+            height: 30px;
+            width: 50%;
+            margin: 5px auto;
+        }
+        .wf-caption {
+            color: var(--light);
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            text-align: center;
+        }
+
+        /* Mid-Fidelity Wireframe Specific Styles (mf-) */
+        .mf-statusbar {
+            background-color: #B0B0B0; /* Lighter gray for status bar */
+            height: 24px;
+            border-radius: 6px 6px 0 0; /* Rounded top corners if screen is standalone */
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 10px;
+            font-size: 0.7rem;
+            color: #555;
+        }
+        .mf-statusbar-left, .mf-statusbar-right {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .mf-statusbar-icon {
+            width: 10px; height: 10px; background-color: #888; border-radius: 2px;
+        }
+
+        .mf-appbar {
+            background-color: #A0A0A0; /* Darker gray for app bar */
+            height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 15px;
+            border-bottom: 1px solid #888;
+        }
+        .mf-appbar-title {
+            background-color: #777;
+            height: 20px;
+            width: 100px;
+            border-radius: 4px;
+            color: #FFF; display:flex; align-items:center; justify-content:center; font-size:0.8rem; font-weight:bold;
+        }
+
+        .mf-icon-placeholder {
+            background-color: #888;
+            width: 28px;
+            height: 28px;
+            border-radius: 6px;
+            display: flex; align-items:center; justify-content:center; color:#DDD; font-size:1.2rem;
+        }
+        .mf-grid-icon span { display:inline-block; width:5px; height:5px; background:#DDD; margin:1px; border-radius:1px; }
+
+        .mf-image-banner {
+            background-color: #C0C0C0;
+            width: 100%;
+            height: 150px; /* Adjusted height */
+            border-radius: 0; /* No radius if part of full screen bleed */
+            display: flex; justify-content:center; align-items:center; color:#888; font-size:1.5rem;
+        }
+
+        .mf-content-padding {
+            padding: 15px;
+            flex-grow: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .mf-heading-text {
+            background-color: transparent; /* No background, just represent with structure */
+            height: auto;
+            padding: 5px 0;
+        }
+        .mf-heading-text .mf-text-line {
+            background-color: #666; /* Darker for heading */
+            height: 20px; margin-bottom:8px;
+        }
+        .mf-heading-text .mf-text-line.short { width: 70%; height:20px;}
+
+        .mf-body-text .mf-text-line {
+            background-color: #888; /* Lighter for body */
+            height: 12px; margin-bottom:6px;
+        }
+        .mf-body-text .mf-text-line.long { width: 100%; }
+        .mf-body-text .mf-text-line.medium { width: 90%; }
+        .mf-body-text .mf-text-line.short { width: 75%; }
+
+        .mf-subheading .mf-text-line {
+             background-color: #777;
+             height: 14px;
+             width: 120px; /* Fixed width for a subheading like "Latest News" */
+             margin-bottom: 10px;
+        }
+
+        .mf-news-cards-container {
+            display: flex;
+            gap: 15px;
+            overflow-x: auto; /* Horizontal scroll */
+            padding-bottom: 10px; /* For scrollbar visibility */
+        }
+
+        .mf-news-card {
+            background-color: #C8C8C8;
+            border-radius: 10px;
+            min-width: 200px; /* Wider cards */
+            border: 1px solid #AAA;
+            overflow: hidden;
+        }
+        .mf-news-card-image {
+            background-color: #B0B0B0;
+            height: 100px;
+            display:flex; align-items:center; justify-content:center; color:#777;
+        }
+        .mf-news-card-text {
+            padding: 10px;
+        }
+        .mf-news-card-text .mf-text-line {
+            background-color: #777; height: 10px; margin-bottom: 5px;
+        }
+        .mf-news-card-text .mf-text-line.short { width: 60%; }
+
+        .mf-bottom-nav {
+            background-color: #A0A0A0;
+            height: 60px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            border-top: 1px solid #888;
+            padding: 5px 0;
+        }
+        .mf-nav-item-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+        }
+        .mf-nav-item-active .mf-icon-placeholder { background-color: var(--primary); color: var(--light); }
+        .mf-nav-item-active .mf-nav-text { color: var(--primary); font-weight: bold;}
+        .mf-nav-text {
+            background-color: transparent;
+            height: 10px;
+            font-size: 0.7rem;
+            color: #555;
+        }
+
+        /* Schedule View Specific Mid-Fidelity Styles */
+        .mf-date-navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            margin-bottom: 10px;
+            border-bottom: 1px solid #B0B0B0;
+        }
+        .mf-date-nav-arrow {
+            background-color: #B0B0B0;
+            width: 24px;
+            height: 24px;
+            border-radius: 4px;
+            display:flex; align-items:center; justify-content:center; color:#666;
+        }
+        .mf-date-display {
+            background-color: #C0C0C0;
+            height: 20px;
+            width: 120px;
+            border-radius: 4px;
+        }
+
+        .mf-schedule-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .mf-schedule-item-card {
+            background-color: #D8D8D8; /* Lighter for distinct items */
+            border-radius: 8px;
+            padding: 12px;
+            border: 1px solid #C0C0C0;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+        .mf-schedule-item-title .mf-text-line {
+            background-color: #606060; /* Darker for title */
+            height: 16px;
+            width: 70%;
+        }
+        .mf-schedule-item-time .mf-text-line {
+            background-color: #777;
+            height: 10px;
+            width: 50%;
+        }
+        .mf-schedule-item-location .mf-text-line {
+            background-color: #888;
+            height: 10px;
+            width: 80%;
+        }
+
+        /* Student ID Card Specific Mid-Fidelity Styles */
+        .mf-id-card-screen {
+            /* background-color: #003366; */ /* Placeholder for dark blue */
+            /* For wireframe, use a distinct gray */
+            background-color: #6A7A8A; /* Darker bluish-gray for ID background */
+            padding: 0; /* No padding from wireframe-screen if it's full bleed */
+            position: relative; /* For positioning side banner and FAB */
+        }
+
+        .mf-id-college-header {
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .mf-id-college-logo {
+            background-color: #B0B0B0; width: 40px; height: 40px; border-radius: 50%;
+        }
+        .mf-id-college-name .mf-text-line {
+            background-color: #C0C0C0; height: 12px; margin-bottom: 4px;
+        }
+
+        .mf-id-photo-area {
+            display: flex;
+            justify-content: center;
+            padding: 10px 0;
+        }
+        .mf-id-student-photo {
+            background-color: #B0B0B0;
+            width: 120px; /* Proportionally smaller */
+            height: 150px;
+            border-radius: 8px;
+            border: 2px solid #D0D0D0;
+            display:flex; align-items:center; justify-content:center; color:#777;
+        }
+
+        .mf-id-student-name .mf-text-line {
+            background-color: #D0D0D0; /* Light text on dark blue */
+            height: 28px; /* Larger for name */
+            width: 60%;
+            margin: 10px auto;
+            border-radius: 4px;
+        }
+
+        .mf-id-mascot-bg-placeholder {
+            background-color: #7F8C9A; /* Slightly lighter than ID bg */
+            width: 180px; height: 180px; border-radius: 50%;
+            margin: 5px auto;
+            display: flex; align-items:center; justify-content:center; color:#6A7A8A; font-size:1.5rem;
+            opacity: 0.5;
+        }
+        .mf-id-checkmark-overlay {
+            background-color: #5CB85C; /* Greenish placeholder */
+            width: 50px; height: 50px; border-radius: 50%;
+            position: absolute;
+            left: 50%; top: 52%; /* Approximate position over mascot */
+            transform: translate(-50%, -50%);
+            border: 3px solid #FFF;
+            display:flex; align-items:center; justify-content:center; color:#FFF; font-size:1.5rem;
+        }
+
+        .mf-id-qr-code {
+            background-color: #FFF; /* White background for QR */
+            width: 100px; height: 100px;
+            margin: 15px auto;
+            border: 1px solid #DDD;
+            padding: 5px; /* To show it's a container */
+            display:flex; align-items:center; justify-content:center; color:#333; font-size:0.8rem;
+        }
+
+        .mf-id-details-text {
+            text-align: center;
+            padding: 0 15px 15px 15px;
+        }
+        .mf-id-details-text .mf-text-line {
+            background-color: #C0C0C0; /* Lightish text */
+            height: 10px; margin-bottom: 6px; border-radius:3px;
+        }
+
+        .mf-id-side-banner {
+            position: absolute;
+            right: 0;
+            top: 0;
+            bottom: 0;
+            width: 40px;
+            /* background-color: #FFC107; */ /* Placeholder for yellow */
+            background-color: #D4A017; /* Darker yellow for wireframe */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            color: #6A7A8A; /* Dark text on yellow */
+            font-weight: bold;
+            font-size: 1rem;
+            border-radius: 0 16px 16px 0; /* Matches screen radius if outer */
+        }
+
+        .mf-id-fab {
+            position: absolute;
+            bottom: 15px;
+            right: 10px; 
+            background-color: #FFC107; 
+            width: 40px; height: 40px; border-radius: 50%;
+            display:flex; align-items:center; justify-content:center; color:#333; font-size:1.5rem;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 10; 
+        }
+
+        /* Campus Map Specific Mid-Fidelity Styles */
+        .mf-map-search-bar {
+            background-color: #D4A017; /* Yellowish for search bar */
+            border-radius: 25px; /* Pill shape */
+            padding: 10px 15px;
+            margin: 10px 15px; /* Position below app bar */
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #333; /* Dark text on yellow */
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+        }
+        .mf-map-search-bar .mf-icon-placeholder {
+            background-color: transparent; /* Icon is part of text color */
+            color: #333;
+            width: auto; height: auto;
+        }
+        .mf-map-search-text {
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .mf-map-area {
+            flex-grow: 1;
+            background-color: #506874; /* Dark teal/blueish placeholder for map bg */
+            position: relative;
+            overflow: hidden; /* To clip paths if they go outside */
+            display: flex;
+            align-items: center; /* For centering abstract content */
+            justify-content: center; /* For centering abstract content */
+        }
+        /* Abstract map elements - lines for roads, blocks for buildings */
+        .mf-map-road {
+            position: absolute;
+            background-color: #607D8B; /* Lighter than map bg */
+            height: 8px; border-radius: 4px;
+        }
+        .mf-map-building {
+            position: absolute;
+            background-color: #455A64; /* Darker than map bg */
+            border-radius: 4px;
+        }
+        .mf-map-pin {
+            position: absolute;
+            background-color: #D4A017; /* Yellow for pins */
+            width: 20px; height: 20px; border-radius: 50% 50% 50% 0; transform: rotate(-45deg);
+            display:flex; align-items:center; justify-content:center;
+        }
+        .mf-map-pin-inner {
+            background-color: #FFF; width:6px; height:6px; border-radius:50%;
+        }
+
+        .mf-map-compass {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background-color: rgba(0,0,0,0.4);
+            width: 36px; height: 36px; border-radius: 50%;
+            display:flex; align-items:center; justify-content:center; color:#FFF; font-size:1.4rem;
+        }
+        .mf-map-attribution {
+            position: absolute;
+            bottom: 5px;
+            left: 10px;
+            font-size: 0.6rem;
+            color: #B0BEC5; /* Light gray for attribution */
+        }
+
+        /* Contact Us Specific Mid-Fidelity Styles */
+        .mf-contact-card {
+            background-color: #BDBDBD; /* Lighter gray for cards */
+            border-radius: 10px;
+            padding: 15px;
+            margin-bottom: 12px; /* Spacing between cards */
+            border: 1px solid #A0A0A0;
+        }
+
+        .mf-contact-dept-name .mf-text-line {
+            background-color: #555; /* Darker for department name */
+            height: 18px;
+            width: 70%; /* Or adjust as needed */
+            margin-bottom: 10px;
+            border-radius: 4px;
+        }
+
+        .mf-contact-actions {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .mf-contact-button {
+            background-color: #D4A017; /* Yellowish button color */
+            color: #333;
+            padding: 8px 12px;
+            border-radius: 20px; /* Pill shape */
+            font-size: 0.8rem;
+            text-align: center;
+            flex-grow: 1; /* Allow buttons to take space */
+            height: 30px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .mf-contact-button.email { flex-grow: 1.5; } /* Email button might be wider */
+
+        .mf-contact-location {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .mf-contact-location .mf-icon-placeholder {
+            background-color: transparent;
+            color: #666;
+            width: 16px; height: 16px; font-size: 1rem;
+        }
+        .mf-contact-location .mf-text-line {
+            background-color: #777;
+            height: 10px;
+            flex-grow: 1;
+            border-radius: 3px;
+        }
+
+        /* Refined Contact Us Mid-Fidelity Styles */
+        .mf-contact-page-bg {
+            background-color: #555D66; 
+        }
+        .mf-contact-card-refined {
+            background-color: #3E4752; 
+            border-radius: 12px; 
+            padding: 15px; /* Reduced padding slightly */
+            margin-bottom: 15px;
+            border: none; 
+        }
+
+        .mf-contact-dept-name-refined .mf-text-line {
+            background-color: #D0D0D0; 
+            height: 18px; /* Slightly reduced height */
+            width: auto; 
+            margin-bottom: 10px;
+            border-radius: 4px;
+            display: inline-block; 
+            padding: 0 5px; /* Add some padding if text is directly inside */
+            font-size: 0.9rem; /* Suggestion: directly style text size if needed */
+            line-height: 18px; /* Match height */
+        }
+
+        .mf-contact-button-refined {
+            background-color: #EAA220; 
+            color: #2A2A2A; 
+            padding: 6px 10px; /* Reduced padding */
+            border-radius: 6px; /* Slightly less rounded to help with text fit */
+            font-size: 0.7rem; /* Reduced font size further */
+            font-weight: 500;
+            text-align: center;
+            flex-basis: auto; 
+            min-width: 90px; /* Slightly reduced min-width */
+            height: 28px; /* Reduced height */
+            line-height: normal; /* Allow browser to determine line height for smaller font */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; /* Prevent text overflow if absolutely necessary */
+            text-overflow: ellipsis; /* Show ellipsis if text overflows */
+            white-space: nowrap; /* Keep text on one line */
+        }
+        .mf-contact-location-refined {
+            display: flex;
+            align-items: center;
+            gap: 6px; /* Reduced gap */
+            margin-top: 8px; /* Reduced margin */
+        }
+        .mf-contact-location-refined .mf-icon-placeholder {
+            background-color: transparent;
+            color: #B0B0B0; 
+            width: 16px; height: 16px; font-size: 1rem;
+        }
+        .mf-contact-location-refined .mf-text-line {
+            background-color: #B0B0B0; 
+            height: 10px; /* Reduced height */
+            width: auto; 
+            display: inline-block;
+            border-radius: 3px;
+            padding: 0 4px; /* Add some padding if text is directly inside */
+            font-size: 0.75rem; /* Suggestion: directly style text size */
+            line-height: 10px; /* Match height */
+        }
+
+        /* App View (Launcher) Specific Mid-Fidelity Styles */
+        .mf-app-view-top-nav {
+            background-color: #2A2A2A; /* Dark background for top nav tabs */
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #444;
+        }
+        .mf-app-view-tab-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: #C0C0C0; /* Light gray for inactive tabs */
+        }
+        .mf-app-view-tab-item .mf-icon-placeholder {
+            background-color: transparent;
+            width: 24px; height: 24px;
+            font-size: 1.2rem;
+            color: inherit;
+        }
+        .mf-app-view-tab-item .mf-nav-text { /* Reusing mf-nav-text for consistency */
+            font-size: 0.65rem;
+            color: inherit;
+        }
+        .mf-app-view-tab-item.active {
+            color: var(--primary); /* Active tab color */
+        }
+
+        .mf-app-grid-container {
+            padding: 20px 15px;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px; /* Gap between icons */
+            flex-grow: 1;
+            overflow-y: auto;
+            background-color: #3E4752; /* Dark background for the grid area */
+        }
+
+        .mf-app-icon-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+        .mf-app-icon-placeholder {
+            background-color: #B0B0B0; /* Placeholder icon bg */
+            width: 64px; /* Larger icon size */
+            height: 64px;
+            border-radius: 12px; /* Rounded square */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.8rem; /* For potential icon font if used */
+            color: #555;
+        }
+        /* Different color placeholders based on image */
+        .mf-app-icon-placeholder.blue { background-color: #4A90E2; }
+        .mf-app-icon-placeholder.white { background-color: #FFFFFF; color: #333; border: 1px solid #DDD;}
+        .mf-app-icon-placeholder.orange { background-color: #F5A623; }
+        .mf-app-icon-placeholder.red { background-color: #D0021B; }
+        .mf-app-icon-placeholder.green { background-color: #7ED321; }
+        .mf-app-icon-placeholder.purple { background-color: #9013FE; }
+
+        .mf-app-label {
+            font-size: 0.7rem;
+            color: #D0D0D0; /* Light text for labels */
+            text-align: center;
+        }
+
+        .mf-home-indicator {
+            background-color: #C0C0C0;
+            width: 100px;
+            height: 4px;
+            border-radius: 2px;
+            margin: 10px auto 5px auto; /* Centered at the bottom */
+        }
+
+        /* User Persona Styles */
+        .persona-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 2rem;
+            margin-top: 1.5rem;
+        }
+
+        .persona-card {
+            background-color: #3E4752; /* Slightly lighter than contact cards, or similar to problem cards */
+            border-radius: 16px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .persona-header {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            padding-bottom: 1rem;
+        }
+        .persona-photo-placeholder {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            background-color: #B0B0B0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #555;
+            font-size: 2rem;
+        }
+        .persona-name {
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        .persona-demographics {
+            font-size: 0.85rem;
+            color: var(--light);
+            opacity: 0.8;
+            margin-top: -0.5rem; /* Pull up slightly under name */
+        }
+
+        .persona-section-title {
+            font-size: 1.1rem;
+            color: var(--secondary);
+            font-weight: 500;
+            margin-top: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+        .persona-list {
+            list-style: none;
+            padding-left: 0;
+            font-size: 0.9rem;
+            color: var(--light);
+            opacity: 0.9;
+        }
+        .persona-list li {
+            padding-left: 1.2rem;
+            position: relative;
+            margin-bottom: 0.4rem;
+        }
+        .persona-list li::before {
+            content: '▹'; /* Arrow character */
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+        }
+
+        .persona-bio {
+            font-size: 0.9rem;
+            color: var(--light);
+            opacity: 0.9;
+            line-height: 1.6;
+        }
+
+        .persona-quote {
+            font-style: italic;
+            padding: 1rem;
+            background-color: rgba(42, 42, 42, 0.5); /* var(--gray) with alpha */
+            border-left: 3px solid var(--primary);
+            border-radius: 0 8px 8px 0;
+            font-size: 0.95rem;
+            color: var(--light);
+            margin-top: 0.5rem;
+        }
+
+        /* Core User Flows Section Specific Styles */
+        #core-user-flows > .container {
+            text-align: center; /* Center the section title and the content block */
+        }
+
+        #core-user-flows .section-title {
+            margin-bottom: 1.5rem; 
+        }
+
+        #core-user-flows .section-title::after {
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px; 
+            height: 5px; 
+            bottom: -15px; 
+        }
+
+        #core-user-flows > .container > p:nth-of-type(1) { /* The intro paragraph */
+            text-align: left; 
+            max-width: 760px; 
+            margin: 0 auto 2.5rem auto; 
+        }
+
+        .user-flows-container {
+            max-width: 760px; 
+            margin: 0 auto; 
+            text-align: left; 
+        }
+
+        .user-flow-card { /* Neutralize card appearance */
+            background: none;
+            border: none;
+            padding: 0;
+            margin-bottom: 2.5rem; /* Space between flows */
+            backdrop-filter: none;
+            box-shadow: none;
+            transition: none;
+        }
+        .user-flow-card:hover {
+            transform: none;
+            box-shadow: none;
+        }
+
+        .user-flow-title {
+            font-size: 1.4rem; 
+            font-weight: 600; 
+            color: var(--light); 
+            margin-bottom: 1rem;
+            display: flex; 
+            align-items: center;
+        }
+
+        .user-flow-title i {
+            font-size: 1.5rem; 
+            margin-right: 0.75rem; 
+            color: var(--secondary); /* Teal/Green icon color */
+        }
+
+        .user-flow-steps {
+            list-style-type: decimal; 
+            list-style-position: outside;
+            padding-left: 25px; /* Indent list items relative to the number */
+            color: var(--light);
+            opacity: 0.9;
+        }
+
+        .user-flow-steps li {
+            margin-bottom: 0.5rem; 
+            line-height: 1.7;
+            padding-left: 5px; /* Space between number and text */
+        }
+
+        /* Solution Section Styles */
+        .solutions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .solution-card {
+            background: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .solution-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .solution-card h4 {
+            color: var(--primary);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+        
+        .solution-card .category-badge {
+            margin-bottom: 1rem;
+            font-size: 0.8rem;
+        }
+
+        .solution-card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 1rem;
+            background-color: #555; /* Placeholder bg */
+            aspect-ratio: 16 / 9;
+            object-fit: cover;
+        }
+
+        .solution-card p {
+            color: var(--light);
+            opacity: 0.9;
+            line-height: 1.6;
+            font-size: 0.9rem;
+        }
+
+    </style>
+</head>
+<body>
+    <header class="hero">
+        <div class="container">
+            <div class="hero-content">
+                <h1>UX Research & Design Portfolio</h1>
+                <h2>Queensborough Community College – QCC Connect App</h2>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="section" id="final-product-showcase">
+            <div class="container">
+                <h2 class="section-title">Final Product Showcase</h2>
+                <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">The QCC Connect app was transformed into a user-friendly, responsive tool tailored to student needs. Explore the key features and design of the launched application below.</p>
+                <div class="row align-items-center" style="margin-top:2rem;">
+                    <div class="col-md-6 offset-md-3 d-flex justify-content-center align-items-center">
+                        <div class="carousel">
+                            <div class="carousel-screen">
+                                <img src="assets/QCC_connect_events_coursel.jpg" alt="Final App Screenshot" class="carousel-image">
+                            </div>
+                            <div class="carousel-nav">
+                                <button onclick="previousSlide()"><i class="bi bi-arrow-left"></i></button>
+                                <button onclick="nextSlide()"><i class="bi bi-arrow-right"></i></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                 <div class="card" style="margin-top: 3rem; max-width:600px; margin-left:auto; margin-right:auto;">
+                    <h3 style="text-align:center; margin-bottom:1.5rem;">Key Features of Launched App</h3>
+                    <ul class="feature-list">
+                        <li>🌙 Dark Mode for enhanced accessibility</li>
+                        <li>🚌 Real-time Transit Tracker</li>
+                        <li>📍 Interactive Campus Map</li>
+                        <li>🔐 Biometric Sign-in</li>
+                        <li>🗓️ Redesigned Schedule View</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">Project Process Overview</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-phase">Phase 1: Research & Discovery</div>
+                            <div class="timeline-week">Week 1</div>
+                            <ul class="timeline-tasks">
+                                <li>Send out screener</li>
+                                <li>Conduct interviews</li>
+                                <li>Competitive analysis</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-phase">Phase 2: Ideation</div>
+                            <div class="timeline-week">Week 2</div>
+                            <ul class="timeline-tasks">
+                                <li>Define problem</li>
+                                <li>Sketching</li>
+                                <li>Define MVP</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-phase">Phase 3: Planning & Structure</div>
+                            <div class="timeline-week">Week 3</div>
+                            <ul class="timeline-tasks">
+                                <li>User stories</li>
+                                <li>Sharpen user stories</li>
+                                <li>Prioritize features</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-phase">Phase 4: Design</div>
+                            <div class="timeline-week">Week 4</div>
+                            <ul class="timeline-tasks">
+                                <li>Wireframes</li>
+                                <li>Prototype</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item">
+                        <div class="timeline-content">
+                            <div class="timeline-phase">Phase 5: Testing & Iteration</div>
+                            <div class="timeline-week">Week 5</div>
+                            <ul class="timeline-tasks">
+                                <li>Usability tests</li>
+                                <li>Reiteration</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">2. Auditing the Existing Experience</h2>
+                <p>Content for Auditing: Conduct a heuristic evaluation (usability review). Analyze the UI, navigation flow, and overall usability. Review analytics for user drop-offs or low engagement areas.</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">3. User Research & Discovery</h2>
+                <p style="margin-bottom: 2rem;">To gather comprehensive user data, a multi-faceted research approach was employed, including: <br/>• Surveys & Screener Forms for recruitment <br/>• In-depth interviews with current students <br/>• Usability testing of the existing app to observe real-world frustrations <br/>• A competitive analysis to benchmark against similar products.</p>
+                
+                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Participant Overview</h3>
+                <div class="row text-center" style="margin-top: 1rem;">
+                    <div class="col-md-6">
+                        <div class="chart-container" id="majorsChartContainer">
+                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Survey Participants by Major</h4>
+                            <canvas id="majorsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="chart-container" id="methodsChartContainer">
+                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Participants by Method</h4>
+                            <canvas id="methodsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Key User Personas</h3>
+                <div class="persona-grid">
+                    <!-- Persona 1 -->
+                    <div class="persona-card">
+                        <div class="persona-header">
+                            <div class="persona-photo-placeholder"><i class="bi bi-person-bounding-box"></i></div>
+                            <div>
+                                <div class="persona-name">Sarah M.</div>
+                                <div class="persona-demographics">20, Sophomore, Nursing, Tech-Savvy</div>
+                            </div>
+                        </div>
+                        <div class="persona-bio">
+                            Sarah juggles a demanding nursing program with a part-time job and a long commute. She relies heavily on her phone to stay organized and needs quick access to her schedule, campus services, and transit information.
+                        </div>
+                        <div>
+                            <div class="persona-section-title">Goals:</div>
+                            <ul class="persona-list">
+                                <li>Quickly check class schedule & room changes.</li>
+                                <li>Find contact info for advisors or health services easily.</li>
+                                <li>Get real-time updates on campus shuttle/bus.</li>
+                                <li>Stay informed about important campus announcements.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="persona-section-title">Frustrations:</div>
+                            <ul class="persona-list">
+                                <li>App is slow and often crashes when she's in a hurry.</li>
+                                <li>Confusing navigation makes finding information a chore.</li>
+                                <li>No easy way to see her digital ID or transit pass.</li>
+                                <li>Feels disconnected from campus events she might be interested in.</li>
+                            </ul>
+                        </div>
+                        <div class="persona-quote">
+                            "I need an app that saves me time, not one I have to fight with just to find out where my next class is!"
+                        </div>
+                    </div>
+
+                    <!-- Persona 2 -->
+                    <div class="persona-card">
+                        <div class="persona-header">
+                            <div class="persona-photo-placeholder"><i class="bi bi-person-bounding-box"></i></div>
+                            <div>
+                                <div class="persona-name">David K.</div>
+                                <div class="persona-demographics">18, Freshman, Engineering, Moderate Tech Use</div>
+                            </div>
+                        </div>
+                        <div class="persona-bio">
+                            David is new to QCC and still learning his way around. He wants to get involved in campus life but finds it hard to discover clubs or events. He uses apps for specific tasks but isn't a power user.
+                        </div>
+                        <div>
+                            <div class="persona-section-title">Goals:</div>
+                            <ul class="persona-list">
+                                <li>Navigate the campus and find building locations.</li>
+                                <li>Discover student clubs and upcoming events.</li>
+                                <li>Access library resources and book study rooms.</li>
+                                <li>Understand what services are available to him as a new student.</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <div class="persona-section-title">Frustrations:</div>
+                            <ul class="persona-list">
+                                <li>Current campus map is not interactive or helpful.</li>
+                                <li>Unaware of many app features because they are hidden or unclear.</li>
+                                <li>Information about student services is hard to find.</li>
+                                <li>Overwhelmed by too much information not relevant to him.</li>
+                            </ul>
+                        </div>
+                        <div class="persona-quote">
+                            "It would be great if the app could actually help me figure out college life, not just be another website I have to check."
+                        </div>
+                    </div>
+                    
+                    <!-- Optional Persona 3 - can be added here following the same structure -->
+
+                </div>
+
+                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Insights from Interviews</h3>
+                <div class="insights-grid" style="margin-top: 1rem;">
+                    <div class="insight-category performance">
+                        <div class="insight-header"><span class="insight-icon">📱</span><h3 class="insight-title">Performance</h3></div>
+                        <div class="insight-quote"><p>"Pages load very slowly..."</p></div> <div class="insight-quote"><p>"There's a noticeable delay..."</p></div> <div class="insight-quote"><p>"The app freezes..."</p></div>
+                    </div>
+                    <div class="insight-category uiux">
+                        <div class="insight-header"><span class="insight-icon">🎨</span><h3 class="insight-title">UI/UX Design</h3></div>
+                        <div class="insight-quote"><p>"The layout is confusing..."</p></div> <div class="insight-quote"><p>"Some buttons don't look like buttons..."</p></div> <div class="insight-quote"><p>"The schedule section feels cluttered..."</p></div>
+                    </div>
+                    <div class="insight-category features">
+                        <div class="insight-header"><span class="insight-icon">🛠️</span><h3 class="insight-title">Features</h3></div>
+                        <div class="insight-quote"><p>"It would be useful to see the bus schedule..."</p></div> <div class="insight-quote"><p>"The campus map is too basic..."</p></div> <div class="insight-quote"><p>"I wish I could see my student ID..."</p></div>
+                    </div>
+                    <div class="insight-category stability">
+                        <div class="insight-header"><span class="insight-icon">🧱</span><h3 class="insight-title">Stability</h3></div>
+                        <div class="insight-quote"><p>"Sometimes the app logs me out randomly..."</p></div> <div class="insight-quote"><p>"It crashed when I was trying to look up my course list..."</p></div> <div class="insight-quote"><p>"There were multiple times I couldn't log in..."</p></div>
+                    </div>
+                    <div class="insight-category usefulness">
+                        <div class="insight-header"><span class="insight-icon">💡</span><h3 class="insight-title">Usefulness</h3></div>
+                        <div class="insight-quote"><p>"The app has potential, but I only use it for one or two things..."</p></div> <div class="insight-quote"><p>"It doesn't really add much beyond..."</p></div> <div class="insight-quote"><p>"Most of my classmates don't even know..."</p></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">4. Synthesis & Problem Definition</h2>
+                <p>Feedback from user research was synthesized using affinity maps (insights detailed above) to identify recurring themes. This process led to the definition of the following key problem statements that guided the redesign efforts:</p>
+                <div class="problems-grid" style="margin-top:1rem;">
+                    <div class="problem-card">
+                        <div class="problem-number">01</div><h3 class="problem-title">Lack of Clarity & Navigation</h3>
+                        <p class="problem-description">Students struggle to find important features like schedules, contacts, and transit information due to a confusing interface and poor visual hierarchy.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">02</div><h3 class="problem-title">Inconsistent Performance</h3>
+                        <p class="problem-description">Users experience frequent app crashes, slow loading times, and random logouts, leading to frustration and abandonment of the app.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">03</div><h3 class="problem-title">Missing or Underutilized Features</h3>
+                        <p class="problem-description">The app does not currently support key tools that students expect, such as a campus map, student ID, transit tracker, or event reminders, making it less useful for daily student life.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">04</div><h3 class="problem-title">Low User Awareness & Engagement</h3>
+                        <p class="problem-description">Many students are unaware of the app's existence or don't understand its value, resulting in low engagement despite its potential utility.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-number">05</div><h3 class="problem-title">Accessibility Barriers</h3>
+                        <p class="problem-description">The lack of features like dark mode, biometric login, or customizable views makes the app less accessible and convenient for a diverse student body.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">5. Defining MVP & Opportunities</h2>
+                <p>Based on the synthesized research and problem statements, high-impact improvements were prioritized to define a Minimum Viable Product (MVP). A crucial consideration throughout this process was the adherence to CUNY\'s WCAG 2.1 Level AA accessibility standards, ensuring the app would be usable by all students. User stories were then crafted to ensure proposed solutions directly addressed student needs and goals while meeting these accessibility requirements.</p>
+                <!-- Placeholder for example user stories or MVP list -->
+            </div>
+        </section>
+
+        <section class="section" id="sketching-wireframes-ideation">
+            <div class="container">
+                <h2 class="section-title">6. Sketching, Wireframes & Ideation</h2>
+                 <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">Low-fidelity wireframes were created to map out core user flows and screen layouts based on initial research and problem statements. These helped in visualizing the structure before detailed design.</p>
+                <div class="sketches-grid"> <!-- Reusing sketches-grid for layout -->
+                    
+                    <!-- Wireframe 1: Dashboard/Home -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen">
+                            <div class="wf-header">
+                                <div class="wf-nav-item" style="width:20%;"></div> <!-- Logo/Menu -->
+                                <div class="wf-nav-item"></div> <!-- Profile Icon -->
+                            </div>
+                            <div class="wf-content-area">
+                                <div class="wf-card">
+                                    <div class="wf-title-placeholder" style="width:40%; margin: 0 0 8px 0;"></div>
+                                    <div class="wf-text-line medium"></div>
+                                    <div class="wf-text-line short"></div>
+                                </div>
+                                <div class="wf-card">
+                                    <div class="wf-title-placeholder" style="width:50%; margin: 0 0 8px 0;"></div>
+                                    <div class="wf-text-line"></div>
+                                    <div class="wf-text-line medium"></div>
+                                </div>
+                                <div class="wf-title-placeholder" style="width: 60%; margin: 10px 0 5px 0;"></div>
+                                <div style="display:flex; gap:10px; justify-content:space-around;">
+                                    <div class="wf-card" style="flex:1; text-align:center;"><div class="wf-nav-item" style="margin:auto; margin-bottom:5px;"></div><div class="wf-text-line short" style="margin:auto;"></div></div>
+                                    <div class="wf-card" style="flex:1; text-align:center;"><div class="wf-nav-item" style="margin:auto; margin-bottom:5px;"></div><div class="wf-text-line short" style="margin:auto;"></div></div>
+                                </div>
+                            </div>
+                            <div class="wf-footer" style="justify-content: space-around;">
+                                <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Wireframe: Dashboard/Home Screen</p>
+                    </div>
+
+                    <!-- Wireframe 2: Schedule View -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen">
+                            <div class="wf-header">
+                                <div class="wf-nav-item"></div> <!-- Back -->
+                                <div class="wf-title-placeholder" style="width:50%;"></div>
+                                <div class="wf-nav-item"></div> <!-- Filter/Add -->
+                            </div>
+                            <div class="wf-content-area">
+                                <div class="wf-text-line medium" style="height:15px; margin-bottom:10px;"></div> <!-- Date -->
+                                <div class="wf-card">
+                                    <div class="wf-text-line short" style="height:12px;"></div>
+                                    <div class="wf-text-line medium"></div>
+                                    <div class="wf-text-line short"></div>
+                                </div>
+                                <div class="wf-card">
+                                    <div class="wf-text-line short" style="height:12px;"></div>
+                                    <div class="wf-text-line medium"></div>
+                                    <div class="wf-text-line short"></div>
+                                </div>
+                                <div class="wf-card">
+                                    <div class="wf-text-line short" style="height:12px;"></div>
+                                    <div class="wf-text-line medium"></div>
+                                    <div class="wf-text-line short"></div>
+                                </div>
+                            </div>
+                            <div class="wf-footer" style="justify-content: space-around;">
+                                <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Wireframe: Schedule View</p>
+                    </div>
+
+                    <!-- Wireframe 3: Events List -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen">
+                            <div class="wf-header">
+                                <div class="wf-nav-item"></div> <!-- Back -->
+                                <div class="wf-title-placeholder" style="width:40%;"></div>
+                                <div class="wf-nav-item"></div> <!-- Search/Filter -->
+                            </div>
+                            <div class="wf-content-area">
+                                <div class="wf-card">
+                                    <div class="wf-image-placeholder" style="height:80px; width:30%; float:left; margin-right:10px;">X</div>
+                                    <div class="wf-text-line medium" style="height:12px;"></div>
+                                    <div class="wf-text-line short"></div>
+                                    <div class="wf-text-line short"></div>
+                                    <div style="clear:both;"></div>
+                                </div>
+                                <div class="wf-card">
+                                    <div class="wf-image-placeholder" style="height:80px; width:30%; float:left; margin-right:10px;">X</div>
+                                    <div class="wf-text-line medium" style="height:12px;"></div>
+                                    <div class="wf-text-line short"></div>
+                                    <div class="wf-text-line short"></div>
+                                    <div style="clear:both;"></div>
+                                </div>
+                            </div>
+                            <div class="wf-footer" style="justify-content: space-around;">
+                                <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Wireframe: Events List</p>
+                    </div>
+
+                    <!-- Wireframe 4: Student ID -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen">
+                            <div class="wf-header">
+                                <div class="wf-nav-item"></div> <!-- Back -->
+                                <div class="wf-title-placeholder" style="width:50%;"></div>
+                                <div class="wf-nav-item" style="visibility:hidden;"></div> <!-- Spacer -->
+                            </div>
+                            <div class="wf-content-area" style="justify-content:center; align-items:center;">
+                                <div class="wf-card" style="width:80%; height: 50%; display:flex; flex-direction:column; justify-content:space-between; padding:15px;">
+                                    <div style="display:flex; justify-content:space-between; align-items:center;">
+                                        <div class="wf-image-placeholder" style="width:60px; height:60px; border-radius:50%;">X</div> <!-- Profile Pic -->
+                                        <div class="wf-text-line" style="width:50%; height:15px;"></div> <!-- School Name -->
+                                    </div>
+                                    <div class="wf-title-placeholder" style="height:25px; width:90%; margin-bottom:10px;"></div> <!-- Student Name -->
+                                    <div class="wf-text-line medium" style="height:15px; margin-bottom:10px;"></div> <!-- Student ID# -->
+                                    <div class="wf-image-placeholder" style="height:40px; width:100%;">BARCODE</div> <!-- Barcode -->
+                                </div>
+                            </div>
+                             <div class="wf-footer" style="justify-content: space-around;">
+                                <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div> <div class="wf-nav-item"></div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Wireframe: Student ID Card</p>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">7. Prototyping</h2>
+                <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">Mid-to-high fidelity wireframes were developed to solidify the user interface structure and core interactions for key screens. These provided a clearer blueprint for visual design and development, evolving from earlier sketches based on user feedback.</p>
+                
+                <div class="sketches-grid"> <!-- Reusing sketches-grid for layout -->
+
+                    <!-- Mid-Fidelity Wireframe 1: Connect Home Screen (Re-inserting) -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen" style="height: 600px;">
+                            <div class="mf-statusbar">
+                                <div class="mf-statusbar-left">7:04 <div class="mf-statusbar-icon" style="width:8px; height:12px; border-radius: 50% 50% 0 0; transform: rotate(45deg);"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon"></div> 5G <div class="mf-statusbar-icon" style="width:18px; height:8px;"></div></div>
+                            </div>
+                            <div class="mf-appbar">
+                                <div class="mf-icon-placeholder"><i class="bi bi-person-fill"></i></div>
+                                <div class="mf-appbar-title">Connect</div>
+                                <div class="mf-icon-placeholder mf-grid-icon">
+                                    <span></span><span></span><span></span>
+                                    <span></span><span></span><span></span>
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            <div class="mf-image-banner">[Campus Hero Image]</div>
+                            <div class="mf-content-padding">
+                                <div class="mf-heading-text">
+                                    <div class="mf-text-line"></div>
+                                    <div class="mf-text-line short"></div>
+                                </div>
+                                <div class="mf-body-text">
+                                    <div class="mf-text-line long"></div>
+                                    <div class="mf-text-line medium"></div>
+                                    <div class="mf-text-line short"></div>
+                                </div>
+                                <div class="mf-subheading">
+                                    <div class="mf-text-line"></div> <!-- Latest News -->
+                                </div>
+                                <div class="mf-news-cards-container">
+                                    <div class="mf-news-card">
+                                        <div class="mf-news-card-image">[Event Image]</div>
+                                        <div class="mf-news-card-text">
+                                            <div class="mf-text-line"></div>
+                                            <div class="mf-text-line short"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mf-news-card">
+                                        <div class="mf-news-card-image">[Event Image]</div>
+                                        <div class="mf-news-card-text">
+                                            <div class="mf-text-line"></div>
+                                            <div class="mf-text-line short"></div>
+                                        </div>
+                                    </div>
+                                    <div class="mf-news-card">
+                                        <div class="mf-news-card-image">[Event Image]</div>
+                                        <div class="mf-news-card-text">
+                                            <div class="mf-text-line"></div>
+                                            <div class="mf-text-line short"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mf-bottom-nav">
+                                <div class="mf-nav-item-container mf-nav-item-active">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-chat-dots-fill"></i></div>
+                                    <div class="mf-nav-text">Connect</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-calendar-event"></i></div>
+                                    <div class="mf-nav-text">Schedule</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-map"></i></div>
+                                    <div class="mf-nav-text">Map</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-compass"></i></div>
+                                    <div class="mf-nav-text">Events</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: Connect Home Screen</p>
+                    </div>
+
+                    <!-- Mid-Fidelity Wireframe 2: Schedule View -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen" style="height: 600px;">
+                            <div class="mf-statusbar">
+                                <div class="mf-statusbar-left">7:05 <div class="mf-statusbar-icon" style="width:8px; height:12px; border-radius: 50% 50% 0 0; transform: rotate(45deg);"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon"></div> 5G <div class="mf-statusbar-icon" style="width:18px; height:8px;"></div></div>
+                            </div>
+                            <div class="mf-appbar">
+                                <div class="mf-icon-placeholder"><i class="bi bi-arrow-left-short"></i></div>
+                                <div class="mf-appbar-title">My Schedule</div>
+                                <div class="mf-icon-placeholder"><i class="bi bi-sliders"></i></div> <!-- Filter/Options -->
+                            </div>
+                            <div class="mf-content-padding">
+                                <div class="mf-date-navigation">
+                                    <div class="mf-date-nav-arrow"><i class="bi bi-chevron-left"></i></div>
+                                    <div class="mf-date-display"></div> <!-- Current Date Range -->
+                                    <div class="mf-date-nav-arrow"><i class="bi bi-chevron-right"></i></div>
+                                </div>
+                                <div class="mf-schedule-content">
+                                    <div class="mf-schedule-item-card">
+                                        <div class="mf-schedule-item-title"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-time"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-location"><div class="mf-text-line"></div></div>
+                                    </div>
+                                    <div class="mf-schedule-item-card">
+                                        <div class="mf-schedule-item-title"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-time"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-location"><div class="mf-text-line"></div></div>
+                                    </div>
+                                    <div class="mf-schedule-item-card">
+                                        <div class="mf-schedule-item-title"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-time"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-location"><div class="mf-text-line"></div></div>
+                                    </div>
+                                     <div class="mf-schedule-item-card">
+                                        <div class="mf-schedule-item-title"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-time"><div class="mf-text-line"></div></div>
+                                        <div class="mf-schedule-item-location"><div class="mf-text-line"></div></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mf-bottom-nav">
+                                 <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-chat-dots-fill"></i></div>
+                                    <div class="mf-nav-text">Connect</div>
+                                </div>
+                                <div class="mf-nav-item-container mf-nav-item-active">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-calendar-event"></i></div>
+                                    <div class="mf-nav-text">Schedule</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-map"></i></div>
+                                    <div class="mf-nav-text">Map</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-compass"></i></div>
+                                    <div class="mf-nav-text">Events</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: Schedule View</p>
+                    </div>
+
+                    <!-- Mid-Fidelity Wireframe 3: Student ID Card -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen mf-id-card-screen" style="height: 600px;">
+                            <div class="mf-statusbar" style="background-color:transparent; color:#C0C0C0;"> <!-- Transparent for ID screen overlay -->
+                                <div class="mf-statusbar-left">7:05 <div class="mf-statusbar-icon" style="border:1px solid #C0C0C0;"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon" style="border:1px solid #C0C0C0;"></div> 5G <div class="mf-statusbar-icon" style="border:1px solid #C0C0C0; width:18px;"></div></div>
+                            </div>
+                            
+                            <!-- No typical app bar -->
+
+                            <div class="mf-id-college-header">
+                                <div class="mf-id-college-logo"></div>
+                                <div style="flex-grow:1;">
+                                    <div class="mf-id-college-name"><div class="mf-text-line" style="width:80%;"></div></div>
+                                    <div class="mf-id-college-name"><div class="mf-text-line" style="width:60%;"></div></div>
+                                </div>
+                            </div>
+
+                            <div class="mf-id-photo-area">
+                                <div class="mf-id-student-photo">PHOTO</div>
+                            </div>
+
+                            <div class="mf-id-student-name"><div class="mf-text-line"></div></div>
+                            
+                            <div style="position:relative; text-align:center; margin-top:-30px; z-index:0;"> <!-- Mascot behind name and checkmark -->
+                                <div class="mf-id-mascot-bg-placeholder">MASCOT</div>
+                            </div>
+                            <div class="mf-id-checkmark-overlay"><i class="bi bi-check-lg"></i></div>
+
+                            <div class="mf-id-qr-code">QR</div>
+
+                            <div class="mf-id-details-text">
+                                <div class="mf-text-line" style="width:70%; margin:auto;"></div>
+                                <div class="mf-text-line" style="width:60%; margin:auto;"></div>
+                                <div class="mf-text-line" style="width:40%; margin:auto;"></div>
+                            </div>
+                            
+                            <div class="mf-id-side-banner">STUDENT</div>
+                            <div class="mf-id-fab"><i class="bi bi-currency-dollar"></i></div>
+
+                            <!-- No bottom nav -->
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: Student ID Card</p>
+                    </div>
+
+                    <!-- Mid-Fidelity Wireframe 4: Campus Map -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen" style="height: 600px;">
+                            <div class="mf-statusbar">
+                                <div class="mf-statusbar-left">10:47 <div class="mf-statusbar-icon" style="width:8px; height:12px; border-radius: 50% 50% 0 0; transform: rotate(45deg);"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon"></div> 5G <div class="mf-statusbar-icon" style="width:18px; height:8px;"></div></div>
+                            </div>
+                            <div class="mf-appbar">
+                                <div class="mf-icon-placeholder"><i class="bi bi-person-fill"></i></div>
+                                <div class="mf-appbar-title">Campus Map</div>
+                                <div class="mf-icon-placeholder mf-grid-icon">
+                                    <span></span><span></span><span></span>
+                                    <span></span><span></span><span></span>
+                                    <span></span><span></span><span></span>
+                                </div>
+                            </div>
+                            
+                            <div class="mf-map-search-bar">
+                                <div class="mf-icon-placeholder"><i class="bi bi-search"></i></div>
+                                <div class="mf-map-search-text">Search</div>
+                            </div>
+
+                            <div class="mf-map-area">
+                                <!-- Abstract representation of map content -->
+                                <div class="mf-map-building" style="width:80px; height:50px; top:20%; left:10%;"></div>
+                                <div class="mf-map-building" style="width:60px; height:90px; top:15%; left:40%;"></div>
+                                <div class="mf-map-building" style="width:70px; height:60px; top:30%; left:65%;"></div>
+                                <div class="mf-map-building" style="width:100px; height:40px; top:55%; left:15%;"></div>
+                                <div class="mf-map-building" style="width:50px; height:70px; top:60%; left:50%;"></div>
+
+                                <div class="mf-map-road" style="width:80%; height:10px; top:45%; left:10%;"></div>
+                                <div class="mf-map-road" style="width:10px; height:70%; top:10%; left:30%;"></div>
+                                
+                                <!-- Example Pins -->
+                                <div class="mf-map-pin" style="top:25%; left:15%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:18%; left:45%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:35%; left:70%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:60%; left:20%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:68%; left:55%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:50%; left:35%;"><div class="mf-map-pin-inner"></div></div>
+                                <div class="mf-map-pin" style="top:22%; left:60%;"><div class="mf-map-pin-inner"></div></div>
+                                 <div class="mf-map-pin" style="top:40%; left:50%;"><div class="mf-map-pin-inner"></div></div>
+
+                                <div class="mf-map-compass"><i class="bi bi-compass"></i></div>
+                                <div class="mf-map-attribution">&copy;Maps Legal</div>
+                            </div>
+
+                            <div class="mf-bottom-nav">
+                                 <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-chat-dots-fill"></i></div>
+                                    <div class="mf-nav-text">Connect</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-calendar-event"></i></div>
+                                    <div class="mf-nav-text">Schedule</div>
+                                </div>
+                                <div class="mf-nav-item-container mf-nav-item-active">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-map"></i></div>
+                                    <div class="mf-nav-text">Map</div>
+                                </div>
+                                <div class="mf-nav-item-container">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-compass"></i></div>
+                                    <div class="mf-nav-text">Events</div>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: Campus Map</p>
+                    </div>
+
+                    <!-- Mid-Fidelity Wireframe 5: Contact Us (Refined) -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen" style="height: 600px;">
+                            <div class="mf-statusbar">
+                                <div class="mf-statusbar-left">7:05 <div class="mf-statusbar-icon"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon"></div> 5G <div class="mf-statusbar-icon" style="width:18px; height:8px;"></div></div>
+                            </div>
+                            <div class="mf-appbar" style="background-color: #003366;"> <!-- Dark blue app bar like image -->
+                                <div class="mf-icon-placeholder" style="gap:5px; background:transparent; color:#FFF; width:auto;">
+                                    <i class="bi bi-chevron-left"></i>
+                                    <span style="font-size:0.9rem; font-weight:500;">Main</span>
+                                </div>
+                                <div class="mf-appbar-title" style="width:auto; background-color:transparent; color:#FFF;">Contact Us</div>
+                                <div class="mf-icon-placeholder" style="visibility:hidden;"></div> <!-- Spacer -->
+                            </div>
+                            
+                            <div class="mf-content-padding mf-contact-page-bg"> 
+                                <div class="mf-contact-card-refined">
+                                    <div class="mf-contact-dept-name-refined"><div class="mf-text-line">College Main Number</div></div>
+                                    <div class="mf-contact-actions">
+                                        <div class="mf-contact-button-refined">(718) 555-6262</div>
+                                        <div class="mf-contact-button-refined" style="flex-grow:1.2;">e311@qcc.cuny.edu</div>
+                                    </div>
+                                    <div class="mf-contact-location-refined">
+                                        <div class="mf-icon-placeholder"><i class="bi bi-geo-alt-fill"></i></div>
+                                        <div class="mf-text-line">222-05 56th Avenue</div>
+                                    </div>
+                                </div>
+
+                                <div class="mf-contact-card-refined">
+                                    <div class="mf-contact-dept-name-refined"><div class="mf-text-line">Counseling Center</div></div>
+                                    <div class="mf-contact-actions">
+                                        <div class="mf-contact-button-refined">(718) 555-6370</div>
+                                        <div class="mf-contact-button-refined" style="flex-grow:1.2;">counseling@qcc.cuny.edu</div>
+                                    </div>
+                                    <div class="mf-contact-location-refined">
+                                        <div class="mf-icon-placeholder"><i class="bi bi-geo-alt-fill"></i></div>
+                                        <div class="mf-text-line">Library L-422</div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mf-contact-card-refined">
+                                    <div class="mf-contact-dept-name-refined"><div class="mf-text-line">Health Services</div></div>
+                                    <div class="mf-contact-actions">
+                                        <div class="mf-contact-button-refined">(718) 555-6375</div>
+                                        <div class="mf-contact-button-refined" style="flex-grow:1.2;">healthservices@qcc.cuny.edu</div>
+                                    </div>
+                                    <div class="mf-contact-location-refined">
+                                        <div class="mf-icon-placeholder"><i class="bi bi-geo-alt-fill"></i></div>
+                                        <div class="mf-text-line">Medical Arts MC-02</div>
+                                    </div>
+                                </div>
+
+                                 <div class="mf-contact-card-refined">
+                                    <div class="mf-contact-dept-name-refined"><div class="mf-text-line">Public Safety</div></div>
+                                    <div class="mf-contact-actions">
+                                        <div class="mf-contact-button-refined">(718) 555-6320</div>
+                                        <div class="mf-contact-button-refined" style="flex-grow:1.2;">publicsafety@qcc.cuny.edu</div>
+                                    </div>
+                                    <div class="mf-contact-location-refined">
+                                        <div class="mf-icon-placeholder"><i class="bi bi-geo-alt-fill"></i></div>
+                                        <div class="mf-text-line">Library 3rd Floor</div>
+                                    </div>
+                                </div>
+                                <!-- No bottom nav shown in source image for this screen -->
+                            </div>
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: Contact Us (Refined)</p>
+                    </div>
+
+                    <!-- Mid-Fidelity Wireframe 6: App View / Launcher -->
+                    <div class="wireframe-container">
+                        <div class="wireframe-screen" style="height: 600px; background-color: #2A2A2A;"> <!-- Overall dark bg -->
+                            <div class="mf-statusbar">
+                                <div class="mf-statusbar-left">7:04 <div class="mf-statusbar-icon"></div></div>
+                                <div class="mf-statusbar-right"><div class="mf-statusbar-icon"></div> 5G <div class="mf-statusbar-icon" style="width:18px; height:8px;"></div></div>
+                            </div>
+                            <div class="mf-app-view-top-nav">
+                                <div class="mf-app-view-tab-item">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-info-circle"></i></div>
+                                    <div class="mf-nav-text">About</div>
+                                </div>
+                                <div class="mf-app-view-tab-item">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-telephone"></i></div>
+                                    <div class="mf-nav-text">Contact Us</div>
+                                </div>
+                                <div class="mf-app-view-tab-item">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-person-badge"></i></div>
+                                    <div class="mf-nav-text">Directory</div>
+                                </div>
+                                <div class="mf-app-view-tab-item">
+                                    <div class="mf-icon-placeholder"><i class="bi bi-gear"></i></div>
+                                    <div class="mf-nav-text">Settings</div>
+                                </div>
+                            </div>
+                            
+                            <div class="mf-app-grid-container">
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder blue"></div><div class="mf-app-label">CUNYfirst</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder white"></div><div class="mf-app-label">Email</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder blue"></div><div class="mf-app-label">Navigate360</div></div>
+                                
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder orange"></div><div class="mf-app-label">Brightspace</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder white"></div><div class="mf-app-label">Library</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder blue"></div><div class="mf-app-label">Bookstore</div></div>
+
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder white"></div><div class="mf-app-label">FAFSA</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder red"></div><div class="mf-app-label">TigerBucks...</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder blue"></div><div class="mf-app-label">Transit</div></div>
+
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder green"></div><div class="mf-app-label">Handshake</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder purple"></div><div class="mf-app-label">Involve</div></div>
+                                <div class="mf-app-icon-item"><div class="mf-app-icon-placeholder white"></div><div class="mf-app-label">TigerTips</div></div>
+                                <!-- Add more items if needed -->
+                            </div>
+                            <div class="mf-home-indicator"></div>
+                        </div>
+                        <p class="wf-caption">Mid-Fidelity Wireframe: App Launcher View</p>
+                    </div>
+
+                </div> <!-- End of sketches-grid -->
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">8. User Testing & Iteration</h2>
+                <p>The new prototypes underwent rigorous user testing. Feedback was collected on ease of use, satisfaction, and overall understanding of the new design. Designs were iteratively refined based on this feedback until usability goals were met. Key metrics tracked include:</p>
+                <div class="row text-center" style="margin-top: 2rem;">
+                    <div class="col-md-6 offset-md-3">
+                         <div class="chart-container" id="metricsChartContainer">
+                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Usability Testing Metrics (Post-Prototype)</h4>
+                            <canvas id="metricsChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="team-collaboration-handoff"> 
+             <div class="container">
+                <h2 class="section-title">9. Team Collaboration & Handoff</h2>
+                <p>Before final handoff to the development team, the app's UI design toolkit required formal approval from CUNY. This involved submitting a Graphic Design and Identity Services application to ensure compliance with university branding and visual standards. Once approved, final designs and assets were provided to developers. Close collaboration, including QA sessions, then ensured implementation fidelity. The matrix below outlines team responsibilities for addressing key issue categories identified during research.</p>
+                <div class="matrix-container" style="margin-top:1rem;">
+                    <table class="matrix-table">
+                        <thead><tr><th>Issue Category</th><th>Description</th><th>Team Responsible</th></tr></thead>
+                        <tbody>
+                            <tr><td><span class="category-badge badge-performance">Performance</span></td><td>Slow loading, freezing, lag</td><td><span class="team-tag">Development</span> <span class="team-tag">Engineering</span></td></tr>
+                            <tr><td><span class="category-badge badge-uiux">UI/UX Design</span></td><td>Confusing layout, unclear buttons</td><td><span class="team-tag">UX Design</span> <span class="team-tag">Product Design</span></td></tr>
+                            <tr><td><span class="category-badge badge-features">Features</span></td><td>Missing transit tracker, map, ID</td><td><span class="team-tag">Product Management</span> <span class="team-tag">Engineering</span></td></tr>
+                            <tr><td><span class="category-badge badge-stability">Stability</span></td><td>App crashes, login bugs, logouts</td><td><span class="team-tag">QA/Testing</span> <span class="team-tag">Engineering</span></td></tr>
+                            <tr><td><span class="category-badge badge-usefulness">Usefulness</span></td><td>Low awareness & engagement</td><td><span class="team-tag">Marketing</span> <span class="team-tag">UX Research</span></td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <section class="section" id="addressing-issues">
+            <div class="container">
+                <h2 class="section-title">Addressing Key Issues & Implemented Solutions</h2>
+                <p>Following user research and problem definition, targeted solutions were developed and implemented by the respective teams to address the core issues impacting the QCC Connect app's user experience. Each solution aimed to directly alleviate student frustrations and enhance the app's overall usability and value.</p>
+                
+                <div class="solutions-grid">
+                    <!-- Performance Solution -->
+                    <div class="solution-card">
+                        <span class="category-badge badge-performance">Performance</span>
+                        <h4>Optimized App Speed & Responsiveness</h4>
+                        <p>The Development and Engineering teams undertook significant code refactoring and backend optimizations. This included streamlining database queries, optimizing image assets, and implementing more efficient data loading mechanisms to drastically reduce loading times and eliminate freezing or lag issues.</p>
+                        <img src="assets/placeholder-solution.png" alt="Performance Optimization Visual">
+                    </div>
+
+                    <!-- UI/UX Design Solution -->
+                    <div class="solution-card">
+                        <span class="category-badge badge-uiux">UI/UX Design</span>
+                        <h4>Intuitive Redesign & Clear Navigation</h4>
+                        <p>The UX Design and Product Design teams completely overhauled the app's interface. This involved establishing a clear visual hierarchy, redesigning confusing layouts (like the schedule), ensuring interactive elements were clearly identifiable, and simplifying navigation pathways to make information more accessible.</p>
+                        <img src="assets/placeholder-solution.png" alt="UI/UX Redesign Visual">
+                    </div>
+
+                    <!-- Features Solution -->
+                    <div class="solution-card">
+                        <span class="category-badge badge-features">Features</span>
+                        <h4>Implemented High-Demand Features</h4>
+                        <p>Based on student feedback, the Product Management and Engineering teams prioritized and integrated essential new features. These included a real-time transit tracker, an interactive campus map, and a digital student ID card, directly addressing previously missing functionalities critical for daily student life.</p>
+                        <img src="assets/placeholder-solution.png" alt="New Features Visual">
+                    </div>
+
+                    <!-- Stability Solution -->
+                    <div class="solution-card">
+                        <span class="category-badge badge-stability">Stability</span>
+                        <h4>Enhanced App Stability & Reliability</h4>
+                        <p>The QA/Testing and Engineering teams focused on identifying and resolving critical bugs that caused app crashes, login issues, and random logouts. Rigorous testing cycles and debugging efforts led to a significantly more stable and reliable application.</p>
+                        <img src="assets/placeholder-solution.png" alt="App Stability Visual">
+                    </div>
+
+                    <!-- Usefulness Solution -->
+                    <div class="solution-card">
+                        <span class="category-badge badge-usefulness">Usefulness</span>
+                        <h4>Increased Awareness & Engagement</h4>
+                        <p>To address low awareness, the Marketing and UX Research teams collaborated on initiatives. The Marketing department created introductory pamphlets about the app for new students and launched a promotional campaign on digital signage screens across campus, highlighting the app's benefits and new features, thereby boosting its perceived usefulness and encouraging adoption.</p>
+                        <img src="assets/placeholder-solution.png" alt="Usefulness Campaign Visual">
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <div class="container">
+                <h2 class="section-title">10. Launch & Future Considerations</h2>
+                <p>Following the successful redesign and development process, the QCC Connect app was launched, transformed into a user-friendly and responsive tool (as showcased at the beginning of this portfolio). Post-launch analytics and user support channels are being actively monitored. These ongoing insights will inform future updates, iterations, and continued improvements to the student experience, ensuring the app remains a valuable resource for the QCC community.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2024 Jalen Banks – UX Designer</p>
+            <div class="social-links">
+                <a href="#"><i class="bi bi-linkedin"></i></a>
+                <a href="#"><i class="bi bi-github"></i></a>
+                <a href="#"><i class="bi bi-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Global Chart.js Defaults
+        Chart.defaults.font.family = "'Space Grotesk', sans-serif";
+        Chart.defaults.color = '#F5F5F5'; // var(--light)
+        Chart.defaults.plugins.tooltip.backgroundColor = '#2A2A2A'; // var(--gray)
+        Chart.defaults.plugins.tooltip.titleColor = '#F5F5F5'; // var(--light)
+        Chart.defaults.plugins.tooltip.bodyColor = '#F5F5F5'; // var(--light)
+        Chart.defaults.plugins.tooltip.padding = 10;
+        Chart.defaults.plugins.tooltip.borderColor = '#7B61FF'; // var(--primary)
+        Chart.defaults.plugins.tooltip.borderWidth = 1;
+
+        // Carousel functionality
+        let currentSlide = 0;
+        const slides = [
+            'assets/QCC_connect_events_coursel.jpg',
+            'assets/QCC_Connect_app_Contacts.png',
+            'assets/QCC_connect_schedule_view.jpg',
+            'assets/QCC_connect_app_view.png',
+            'assets/QCC_Connect_app_Student_ID.png',
+            'assets/QCC_connect_app_Latest.png'
+        ];
+
+        function updateSlide() {
+            const img = document.querySelector('.carousel-image');
+            if (img) { // Add check if carousel is present
+                img.style.opacity = 0;
+                setTimeout(() => {
+                    img.src = slides[currentSlide];
+                    img.style.opacity = 1;
+                }, 200);
+            }
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        // Initialize charts in their new locations
+        if (document.getElementById('majorsChart')) {
+            new Chart(document.getElementById('majorsChart').getContext('2d'), {
+                type: 'pie',
+                data: { labels: ['Nursing', 'Engineering', 'Liberal Arts', 'Business'], datasets: [{ data: [45,15,25,15], backgroundColor: ['#7B61FF', '#00F5A0', '#FF61F5', '#FFD700']}]},
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#F5F5F5', font: {size: 14}, padding: 20}}, tooltip: { callbacks: { label: function(context) { let label = context.label || ''; if (label) {label += ': ';} if (context.parsed !== null) { label += context.parsed; const total = context.chart.getDatasetMeta(0).total; const percentage = ((context.parsed / total) * 100).toFixed(1) + '%'; label += ' (' + percentage + ')';} return label;}}}} }
+            });
+        }
+
+        if (document.getElementById('methodsChart')) {
+            new Chart(document.getElementById('methodsChart').getContext('2d'), {
+                type: 'bar',
+                data: { labels: ['Surveys','Interviews','Usability Tests'], datasets: [{ label:'Participants', data:[110,15,10], backgroundColor:'#7B61FF', borderRadius: 5, borderSkipped: false }]},
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display:false}, tooltip: {callbacks: { title: function(c) { return c[0].label; }, label: function(c) { return 'Participants: ' + c.parsed.y;}}}}, scales: { y: { beginAtZero:true, grid:{ color: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.1)'}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Number of Participants', color:'#F5F5F5', font:{size:14}}}, x: { grid:{display:false}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Research Method', color:'#F5F5F5', font: {size:14}}}} }
+            });
+        }
+
+        if (document.getElementById('metricsChart')) {
+            new Chart(document.getElementById('metricsChart').getContext('2d'), {
+                type: 'line',
+                data: { labels: ['Task Time (s)','Error Rate (%)','SUS Score'], datasets: [{ label:'Metrics', data:[45,8,78], borderColor:'#00F5A0', backgroundColor:'rgba(0,245,160,0.2)', tension:0.4, fill:true, pointBackgroundColor:'#00F5A0', pointBorderColor:'#F5F5F5', pointRadius:5, pointHoverRadius:8, pointBorderWidth:2, pointHoverBorderWidth:2 }]},
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display:false}, tooltip: {callbacks: { title: function(c) { return c[0].label; }, label: function(c) { return 'Value: ' + c.parsed.y;}}}}, scales: { y: { beginAtZero:true, grid:{ color: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.1)'}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Value / Score', color:'#F5F5F5', font:{size:14}}}, x: { grid:{display:false}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Usability Metric', color:'#F5F5F5', font: {size:14}}}} }
+            });
+        }
+    </script>
+</body>
+</html> 
