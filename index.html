@@ -2424,6 +2424,160 @@
             scroll-margin-top: 80px; /* Adjust based on sticky nav height + a little extra */
         }
 
+        /* Responsive Design Adjustments */
+
+        /* Tablets and larger mobiles */
+        @media (max-width: 992px) {
+            .hero h1 {
+                font-size: 3.5rem; /* Adjusted from 4.5rem */
+            }
+            .hero-subtitle {
+                font-size: 1.7rem; /* Adjusted from 2rem */
+            }
+            .section-title {
+                font-size: 2.2rem; /* Adjusted from 2.5rem */
+            }
+            .participant-overview-title {
+                font-size: 1.8rem; /* Adjusted from 2rem */
+            }
+            #sticky-portfolio-nav ul li a {
+                padding: 0.5rem 0.6rem;
+                font-size: 0.85rem;
+            }
+            .nav-branding {
+                font-size: 1.1rem;
+            }
+            .showcase-unified-flex {
+                flex-direction: column;
+                gap: 2rem;
+            }
+            .showcase-divider {
+                display: none; /* Hide divider when stacked */
+            }
+            .showcase-features-wrapper,
+            .showcase-carousel-wrapper {
+                padding-right: 0 !important;
+                padding-left: 0 !important;
+                width: 100%; /* Ensure full width when stacked */
+            }
+            .showcase-carousel-wrapper .carousel {
+                margin: 1rem auto; /* Adjust margin */
+            }
+        }
+
+        /* Mobile devices (augmenting existing rules) */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.8rem; /* Further reduce */
+            }
+            .hero-welcome {
+                font-size: 1rem;
+            }
+            .hero-subtitle {
+                font-size: 1.4rem;
+            }
+            .hero-project-intro {
+                font-size: 0.95rem;
+                max-width: 100%;
+            }
+            .section {
+                padding: 3rem 0; /* Further reduce padding */
+            }
+            .section-title {
+                font-size: 1.8rem; /* Further reduce */
+            }
+             .participant-overview-title {
+                font-size: 1.6rem;
+            }
+            .container {
+                padding: 0 1rem; /* Reduce container padding */
+            }
+            #sticky-portfolio-nav .container {
+                /* flex-direction: column; */ /* Removed: No longer stacking */
+                /* gap: 0.5rem; */ /* Removed: No longer stacking */
+                justify-content: center; /* Center the nav links list */
+            }
+            #sticky-portfolio-nav ul {
+                /* flex-wrap: wrap; */ /* Removed: replaced by nowrap for scrolling */
+                flex-wrap: nowrap;
+                overflow-x: auto;
+                justify-content: flex-start; /* Align to start for scrolling */
+                gap: 0.5rem; /* Keep a consistent gap for horizontal layout */
+                padding-bottom: 5px; /* Add a little space for scrollbar if it appears */
+            }
+            #sticky-portfolio-nav ul li a {
+                padding: 0.4rem 0.5rem;
+                font-size: 0.8rem;
+            }
+            .nav-branding {
+                /* margin-bottom: 0.3rem; */ /* Removed: as it might be hidden or not stacked */
+                display: none; /* Hide Jalen Banks on mobile */
+            }
+            .metrics-grid-container {
+                grid-template-columns: 1fr; /* Force single column */
+            }
+            .card, .showcase-unified-card, .metric-card, .chart-card-wrapper, .persona-card, .solution-card, .problem-card, .timeline-content {
+                padding: 1.5rem; /* Reduce padding on cards */
+            }
+            .cool-divider {
+                width: 100px; /* Shorter divider */
+                margin-bottom: 2rem;
+            }
+            /* Ensure chart titles are smaller on mobile */
+            .chart-card-wrapper h4, .metric-card h4 {
+                font-size: 1.1rem;
+            }
+            .persona-name {
+                font-size: 1.5rem;
+            }
+            .persona-header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            .solution-card h4, .problem-title {
+                 font-size: 1.15rem;
+            }
+        }
+
+        /* Smaller mobile devices */
+        @media (max-width: 576px) {
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            .hero-subtitle {
+                font-size: 1.2rem;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .participant-overview-title {
+                font-size: 1.4rem;
+            }
+            #sticky-portfolio-nav ul li a {
+                font-size: 0.75rem;
+                padding: 0.3rem 0.4rem;
+            }
+            /* Further reduce padding on cards for very small screens */
+            .card, .showcase-unified-card, .metric-card, .chart-card-wrapper, .persona-card, .solution-card, .problem-card, .timeline-content {
+                padding: 1rem;
+            }
+            .carousel-nav button {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .scroll-down-indicator {
+                font-size: 2rem;
+                bottom: 20px;
+            }
+            .footer p, .social-links a {
+                font-size: 0.9rem;
+            }
+             .social-links {
+                gap: 1rem;
+            }
+        }
+
     </style>
 </head>
 <body>
