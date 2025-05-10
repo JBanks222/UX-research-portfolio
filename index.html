@@ -19,11 +19,14 @@
     <style>
         :root {
             --primary: #7B61FF;
+            --primary-rgb: 123, 97, 255;
             --secondary: #00F5A0;
             --dark: #0A0A0A;
-            --light: #F5F5F5;
             --gray: #2A2A2A;
+            --gray-rgb: 42, 42, 42; /* Added for sticky indicator bg */
+            --light: #F5F5F5;
             --accent: #FF61F5;
+            --accent-rgb: 255, 97, 245; /* Added for Chrono-Scroll marker */
         }
 
         * {
@@ -72,19 +75,63 @@
         }
 
         .hero h1 {
-            font-size: 4rem;
+            font-size: 4.5rem; /* Slightly larger for name */
             font-weight: 700;
-            margin-bottom: 1rem;
+            margin-bottom: 0.5rem; /* Reduced margin */
             background: linear-gradient(45deg, var(--primary), var(--secondary));
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
+            line-height: 1.2;
         }
 
-        .hero h2 {
-            font-size: 1.5rem;
+        .hero-welcome {
+            font-size: 1.2rem; /* Welcome message size */
+            color: var(--light);
+            opacity: 0.75;
+            margin-bottom: 1rem;
+            font-weight: 400;
+        }
+
+        .hero-subtitle {
+            font-size: 2rem; /* For "UX Research & Design" */
+            color: var(--light);
+            opacity: 0.85;
+            margin-bottom: 1.2rem;
+            font-weight: 500;
+        }
+
+        .hero-project-intro {
+            font-size: 1.1rem; /* For the app description */
             color: var(--light);
             opacity: 0.8;
             margin-bottom: 2rem;
+            max-width: 700px; /* Control width of description */
+            line-height: 1.7;
+        }
+
+        /* Scroll Down Indicator */
+        .scroll-down-indicator {
+            position: absolute;
+            bottom: 30px; /* Adjust as needed */
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 5; /* Ensure it's above hero gradient but below other content if any overlap */
+            color: var(--light);
+            font-size: 2.5rem; /* Size of the arrow */
+            opacity: 0.7;
+            animation: bounceArrow 2s infinite ease-in-out;
+        }
+
+        @keyframes bounceArrow {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+            40% {
+                transform: translateX(-50%) translateY(-10px);
+            }
+            60% {
+                transform: translateX(-50%) translateY(-5px);
+            }
         }
 
         /* Sections */
@@ -1597,53 +1644,877 @@
             font-size: 0.9rem;
         }
 
+        /* Web Embed Reviews Styles */
+        .web-embed-reviews-container {
+            background: rgba(25, 25, 25, 0.7); /* Slightly different dark background */
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 15px;
+            padding: 1.5rem;
+            margin-top: 2.5rem;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+        }
+
+        .review-image-item {
+            margin-bottom: 1rem;
+            border-radius: 8px;
+            overflow: hidden; /* To ensure images respect border radius */
+            border: 1px solid rgba(255, 255, 255, 0.05); /* Subtle border for each image item */
+        }
+
+        .review-image-item img {
+            width: 100%;
+            height: auto;
+            display: block;
+        }
+        .review-image-item:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Interactive Review Styles */
+        .review-filter-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .review-filter-buttons button {
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .review-filter-buttons button:hover,
+        .review-filter-buttons button.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+        }
+
+        .review-card {
+            background: rgba(42, 42, 42, 0.6);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: none; /* Hidden by default, shown by JS */
+        }
+
+        .review-card.visible {
+            display: block;
+        }
+
+        .review-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.2);
+        }
+
+        .review-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .review-name {
+            font-weight: 600;
+            color: var(--light);
+            font-size: 1.1rem;
+        }
+
+        .review-date {
+            font-size: 0.8rem;
+            color: var(--light);
+            opacity: 0.7;
+        }
+
+        .review-stars {
+            margin-bottom: 0.75rem;
+            color: #FFD700; /* Gold color for stars */
+        }
+        .review-stars .bi-star-fill, .review-stars .bi-star-half, .review-stars .bi-star {
+            margin-right: 2px;
+        }
+
+        .review-text {
+            color: var(--light);
+            opacity: 0.9;
+            line-height: 1.6;
+            font-size: 0.95rem;
+            margin-bottom: 1rem;
+        }
+
+        .developer-response {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 3px solid var(--secondary);
+        }
+
+        .developer-response strong {
+            color: var(--secondary);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .developer-response p {
+            font-size: 0.9rem;
+            color: var(--light);
+            opacity: 0.85;
+            margin: 0;
+        }
+
+        /* Timeline Scroll Enhancement Styles */
+        .timeline-scroll-indicator {
+            position: absolute;
+            width: 18px; /* Slightly larger for better visibility */
+            height: 18px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            left: 50%;
+            transform: translateX(-50%) translateY(-50%); /* Correct centering for the dot */
+            z-index: 3; 
+            transition: top 0.35s cubic-bezier(0.4, 0, 0.2, 1), background-color 0.3s ease, opacity 0.3s ease;
+            top: 20px; /* Initial position, will be updated by JS */
+            opacity: 0; /* Initially hidden */
+        }
+
+        .timeline-item.active-timeline-item .timeline-content {
+            transform: scale(1.03); /* Slightly enlarge the active card */
+            box-shadow: 0 10px 30px rgba(var(--primary-rgb), 0.25), 0 8px 15px rgba(0,0,0,0.15);
+            border-color: rgba(var(--primary-rgb), 0.6);
+        }
+        
+        /* Adjust indicator for mobile */
+        @media (max-width: 768px) {
+            .timeline-scroll-indicator {
+                left: 20px; /* Matches mobile timeline bar position */
+                /* transform: translateX(-50%) translateY(-50%); still applies correctly */
+            }
+            .timeline-item.active-timeline-item .timeline-content {
+                 transform: scale(1.02); /* Slightly less pronounced on mobile */
+            }
+        }
+
+        /* Sticky Phase Indicator Styles */
+        .sticky-phase-indicator {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: rgba(var(--gray-rgb), 0.9);
+            backdrop-filter: blur(8px);
+            padding: 0.6rem 1rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 999; /* Ensure it's above most other content */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transform: translateY(-100%); /* Initially hidden above the viewport */
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            opacity: 0;
+        }
+
+        .sticky-phase-indicator.visible {
+            transform: translateY(0);
+            opacity: 1;
+        }
+
+        .sticky-phase-dot {
+            display: inline-block;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: var(--accent); /* Pink dot */
+            margin-right: 0.75rem;
+            flex-shrink: 0;
+        }
+
+        .sticky-phase-text {
+            font-size: 0.9rem;
+            color: var(--light);
+            font-weight: 500;
+            text-align: center;
+        }
+
+        /* Chrono-Scroll Navigator Styles */
+        #chrono-scroll-navigator {
+            position: fixed;
+            left: 20px; /* Distance from the left edge */
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 1000; /* High z-index */
+            opacity: 0;
+            transition: opacity 0.5s ease-in-out;
+            pointer-events: none; /* Initially not interactive until made visible by JS */
+        }
+
+        #chrono-scroll-navigator.csn-visible {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .csn-track {
+            position: relative;
+            width: 4px; /* Slim track */
+            height: 250px; /* Adjust height as needed */
+            background-color: rgba(var(--primary-rgb), 0.25); /* Faint primary color */
+            border-radius: 2px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .csn-phase-node {
+            width: 12px;
+            height: 12px;
+            background-color: rgba(var(--primary-rgb), 0.4);
+            border-radius: 50%;
+            border: 1px solid rgba(var(--primary-rgb), 0.6);
+            transition: transform 0.3s ease, background-color 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer; /* Indicate clickable */
+        }
+
+        .csn-phase-node:hover {
+            transform: scale(1.2);
+            background-color: rgba(var(--primary-rgb), 0.7);
+            box-shadow: 0 0 8px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .csn-phase-node.csn-active-node {
+            background-color: var(--primary);
+            transform: scale(1.3);
+            box-shadow: 0 0 10px rgba(var(--primary-rgb), 0.7), 0 0 15px rgba(var(--primary-rgb), 0.5);
+        }
+
+        .csn-marker {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 20px; /* Larger marker */
+            height: 20px;
+            background-color: var(--accent); /* Pink color */
+            border-radius: 50%;
+            border: 2px solid var(--light);
+            box-shadow: 0 0 12px rgba(var(--accent-rgb, 255, 97, 245), 0.8), 0 0 5px rgba(0,0,0,0.3);
+            transition: top 0.45s cubic-bezier(0.645, 0.045, 0.355, 1); /* Smooth travel */
+            /* Initial top position will be set by JS, for now center on track for visual setup if needed */
+            top: calc(250px / 2 - 10px); /* Example initial position for styling */
+        }
+
+        .csn-spotlight-card {
+            position: absolute;
+            left: 40px; /* Positioned to the right of the track */
+            top: 0; /* Will be aligned by JS */
+            width: 220px; /* Adjust as needed */
+            background-color: rgba(var(--gray-rgb), 0.75); /* Frosted glass effect */
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            padding: 1rem;
+            border: 1px solid rgba(var(--primary-rgb), 0.3);
+            box-shadow: 0 5px 25px rgba(0,0,0,0.2);
+            opacity: 0;
+            transform: translateX(-20px); /* Initial state for animation */
+            transition: opacity 0.4s ease, transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none; /* Hidden means not interactive */
+        }
+
+        .csn-spotlight-card.csn-visible {
+            opacity: 1;
+            transform: translateX(0);
+            pointer-events: auto;
+        }
+
+        .csn-phase-title {
+            color: var(--primary);
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin: 0 0 0.3rem 0;
+        }
+
+        .csn-phase-week {
+            color: var(--secondary);
+            font-size: 0.9rem;
+            font-weight: 500;
+            margin: 0 0 0.5rem 0;
+        }
+
+        .csn-phase-focus {
+            color: var(--light);
+            font-size: 0.85rem;
+            line-height: 1.5;
+            opacity: 0.9;
+            margin: 0;
+        }
+
+        /* Responsive adjustments for Chrono-Scroll Navigator */
+        @media (max-width: 992px) { /* Hide on medium screens and below */
+            #chrono-scroll-navigator {
+                display: none;
+            }
+        }
+
+        /* Showcase Section Compact Layout */
+        .showcase-layout-container {
+            display: grid;
+            grid-template-columns: 1fr; /* Default to single column */
+            gap: 2rem;
+            /* align-items: center; */ /* Remove vertical centering */
+            align-items: start; /* Ensure both columns start at the same top */
+            margin-top: 0;
+        }
+
+        .showcase-carousel-wrapper .carousel {
+            margin: 0 auto; /* Keep carousel centered in its column */
+        }
+
+        .showcase-features-wrapper .card {
+            margin-top: 0;
+            /* Remove any vertical centering or flex properties */
+        }
+
+        @media (min-width: 992px) { /* Apply two-column layout for large screens */
+            .showcase-layout-container {
+                display: flex;
+                align-items: center;
+                gap: 3rem;
+            }
+            .showcase-features-wrapper {
+                flex: 1;
+                grid-column: unset;
+            }
+            .showcase-carousel-wrapper {
+                flex-shrink: 0;
+                grid-column: unset;
+            }
+        }
+        
+        @media (max-width: 767px) { /* Ensure carousel is not too wide on small mobile */
+            .carousel {
+                max-width: 280px; /* Slightly smaller than its original 320px for very small screens */
+            }
+        }
+
+        .showcase-features-wrapper,
+        .showcase-carousel-wrapper {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        .showcase-features-wrapper .card,
+        .showcase-carousel-wrapper .carousel {
+            margin-top: 0 !important;
+            padding-top: 0 !important;
+        }
+        .showcase-features-wrapper .card h3 {
+            margin-top: 0 !important;
+        }
+
+        .showcase-unified-card {
+            background-color: rgba(42, 42, 42, 0.5);
+            backdrop-filter: blur(10px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .showcase-unified-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+        }
+
+        .showcase-shared-heading {
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .showcase-shared-heading::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .showcase-unified-flex {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .showcase-divider {
+            width: 2rem;
+            height: 1px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .step-badge {
+            display: inline-block;
+            background: var(--primary);
+            color: var(--light);
+            font-weight: 600;
+            border-radius: 16px;
+            padding: 0.3em 1em;
+            margin-bottom: 0.5em;
+            font-size: 1rem;
+            letter-spacing: 0.05em;
+        }
+        .step-intro {
+            color: var(--light);
+            opacity: 0.85;
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            font-style: italic;
+        }
+
+        hr.cool-divider {
+            border: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            width: 150px;
+            margin: 0 auto 2.5rem auto; /* Centered, with 2.5rem space below it, before the title */
+            border-radius: 2px;
+        }
+
+        #final-product-showcase {
+            position: relative; /* For pseudo-element positioning */
+        }
+
+        #final-product-showcase::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 50% 30%, rgba(var(--primary-rgb), 0.07) 0%, rgba(var(--dark), 0) 60%);
+            z-index: -1; /* Behind the content */
+            pointer-events: none;
+        }
+
+        /* Style the intro paragraph specifically */
+        #final-product-showcase > .container > p:first-of-type {
+            font-size: 1.15rem; /* Slightly larger */
+            line-height: 1.7;
+            max-width: 760px; /* Control width for readability */
+            margin-left: auto;
+            margin-right: auto;
+            margin-bottom: 3rem; /* More space before the card */
+            text-align: center; /* Ensure it's centered */
+            opacity: 0.9; /* Slightly more opaque */
+        }
+
+        /* Remove the old arrow from feature list and adjust padding */
+        .feature-list li::before {
+            content: ''; /* Remove arrow */
+            display: none; /* Hide the pseudo-element */
+        }
+
+        .feature-list li {
+            padding-left: 0; /* Reset padding as icon will handle it */
+            display: flex; /* Align icon and text nicely */
+            align-items: center; /* Vertical alignment */
+            font-size: 1.05rem; /* Slightly larger feature text */
+            margin-bottom: 1.2rem; /* Adjust spacing */
+        }
+
+        /* Participant Overview Chart Styling */
+        .participant-overview-title { /* For the H3 "Participant Overview" */
+            font-size: 2rem;
+            margin-top: 4rem; /* More space above */
+            margin-bottom: 2.5rem; /* More space below before charts */
+            position: relative;
+            display: inline-block;
+        }
+
+        .participant-overview-title::after { /* Similar to section-title underline */
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            border-radius: 1.5px;
+        }
+
+        .chart-card-wrapper {
+            background: rgba(var(--gray-rgb), 0.6); /* Slightly more opaque than default card */
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            height: 100%; /* Make cards in the same row equal height */
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chart-card-wrapper:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .chart-card-wrapper h4 {
+            color: var(--light);
+            opacity: 0.95;
+            font-size: 1.25rem; /* Slightly larger */
+            font-weight: 600;
+            margin-bottom: 1.5rem; /* More space below title */
+            text-align: center;
+        }
+
+        .chart-container { /* Adjust original chart-container */
+            background: transparent; /* Remove its own background */
+            padding: 0; /* Remove its own padding */
+            /* height: 380px; */ /* Keep a fixed height for consistency or make it flex grow */
+            flex-grow: 1; /* Allow canvas container to fill space */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative; /* For canvas positioning */
+            min-height: 350px; /* Ensure a minimum height */
+        }
+        .chart-container canvas {
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        /* Adjust row for chart cards to ensure they align well */
+        #user-research-discovery-section .row.text-center {
+            display: flex;
+            flex-wrap: wrap; /* Allow wrapping on smaller screens */
+        }
+        #user-research-discovery-section .row.text-center > .col-md-6 {
+            display: flex; /* Allow cards to fill height */
+            flex-direction: column;
+        }
+
+        /* User Testing & Iteration Section - Metrics Grid */
+        .metrics-grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 2.5rem;
+        }
+
+        .metric-card {
+            background: rgba(var(--gray-rgb), 0.6);
+            backdrop-filter: blur(12px);
+            border-radius: 20px;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            text-align: center; /* Center align card content */
+        }
+
+        .metric-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 35px rgba(0, 0, 0, 0.25);
+        }
+
+        .metric-card h4 {
+            color: var(--light);
+            opacity: 0.95;
+            font-size: 1.2rem; /* Adjusted title size */
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card .chart-container { /* Reusing chart-container class but ensuring it works here */
+            background: transparent;
+            padding: 0;
+            flex-grow: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            min-height: 250px; /* Adjusted for potentially smaller cards */
+            width: 100%;
+            margin-bottom: 1rem;
+        }
+
+        .metric-card .chart-container canvas {
+            max-height: 100%;
+            max-width: 100%;
+        }
+
+        .metric-insight {
+            font-size: 0.95rem;
+            color: var(--light);
+            opacity: 0.85;
+            line-height: 1.6;
+            margin-top: 0.5rem;
+        }
+
+        .metric-insight strong {
+            color: var(--secondary); /* Highlight the value */
+            font-weight: 600;
+        }
+
+        /* Original App Metrics Styles */
+        .original-app-metrics {
+            margin-top: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .original-app-metric {
+            text-align: center;
+        }
+
+        .original-app-metric h5 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .original-app-metric p {
+            font-size: 0.9rem;
+            color: var(--light);
+            opacity: 0.8;
+        }
+
+        /* Metrics Toggle Buttons */
+        .metrics-toggle-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2.5rem; /* Space before the metrics grid */
+        }
+
+        .metrics-toggle-buttons button {
+            background: rgba(var(--gray-rgb), 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            color: var(--light);
+            padding: 0.75rem 1.5rem;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: background 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+            font-size: 1rem;
+            font-weight: 500;
+        }
+
+        .metrics-toggle-buttons button:hover {
+            background: rgba(var(--primary-rgb), 0.5);
+            border-color: rgba(var(--primary-rgb), 0.7);
+        }
+
+        .metrics-toggle-buttons button.active {
+            background: var(--primary);
+            color: var(--dark);
+            border-color: var(--primary);
+            font-weight: 600;
+        }
+
+        .metrics-set-hidden {
+            display: none !important; /* Ensure it's hidden */
+        }
+
+        .metrics-intro-paragraph {
+            padding-bottom: 1.5rem; /* Added bottom padding */
+            max-width: 800px; /* Ensuring it doesn't get too wide */
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center; /* Centering the text */
+            line-height: 1.7; /* Improving readability */
+            opacity: 0.9; /* Matching other intro paragraphs */
+        }
+
+        /* Sticky Portfolio Navigation */
+        #sticky-portfolio-nav {
+            position: sticky;
+            top: 0;
+            z-index: 1010; /* Above most content, but potentially below modals if any */
+            background-color: rgba(var(--dark), 0.85); /* Darker, slightly more opaque */
+            backdrop-filter: blur(15px);
+            padding: 0.8rem 0; /* Adjusted padding */
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            width: 100%;
+            transition: top 0.3s ease-in-out; /* Smooth appearance if ever hidden/shown */
+        }
+
+        #sticky-portfolio-nav .container {
+            padding: 0 1rem; /* Reduced padding for nav container */
+            display: flex; /* Added for branding and nav alignment */
+            justify-content: space-between; /* Pushes branding left, nav links right */
+            align-items: center;
+        }
+
+        .nav-branding {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--light); /* Or var(--primary) */
+            /* Optional: Add a subtle text shadow or gradient if desired */
+        }
+
+        #sticky-portfolio-nav ul {
+            list-style: none;
+            display: flex;
+            /* justify-content: space-around; */ /* Removed as parent container handles main spacing */
+            align-items: center;
+            margin: 0;
+            padding: 0;
+            gap: 0.5rem; /* Add gap between nav items */
+        }
+
+        #sticky-portfolio-nav ul li a {
+            color: var(--light);
+            text-decoration: none;
+            padding: 0.6rem 0.8rem; /* Adjusted padding for links */
+            border-radius: 8px; /* Rounded corners for links */
+            font-weight: 500;
+            font-size: 0.9rem; /* Slightly smaller font for nav */
+            transition: background-color 0.3s ease, color 0.3s ease;
+            position: relative;
+            opacity: 0.85;
+        }
+
+        #sticky-portfolio-nav ul li a:hover {
+            background-color: rgba(var(--primary-rgb), 0.2);
+            color: var(--primary);
+            opacity: 1;
+        }
+
+        #sticky-portfolio-nav ul li a.active-nav-link {
+            color: var(--secondary); /* Accent color for active link */
+            font-weight: 700;
+            opacity: 1;
+        }
+
+        #sticky-portfolio-nav ul li a.active-nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -4px; /* Position underline slightly below */
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60%; /* Width of the underline */
+            height: 2px;
+            background-color: var(--secondary);
+            border-radius: 1px;
+        }
+
+        /* Push main content when chrono-nav is active */
+        body.chrono-nav-active main {
+            margin-left: 320px; /* Approx width of navigator + card + small gutter */
+            transition: margin-left 0.45s cubic-bezier(0.645, 0.045, 0.355, 1); /* Matches marker travel */
+        }
+
+        /* Ensure sections under the fixed nav are still targetable at their top */
+        section[id] {
+            scroll-margin-top: 80px; /* Adjust based on sticky nav height + a little extra */
+        }
+
     </style>
 </head>
 <body>
+    <div id="chrono-scroll-navigator">
+        <div class="csn-track">
+            <div class="csn-phase-node" data-phase="1"></div>
+            <div class="csn-phase-node" data-phase="2"></div>
+            <div class="csn-phase-node" data-phase="3"></div>
+            <div class="csn-phase-node" data-phase="4"></div>
+            <div class="csn-phase-node" data-phase="5"></div>
+        </div>
+        <div class="csn-marker"></div>
+        <div class="csn-spotlight-card">
+            <h5 class="csn-phase-title">Phase X: Title</h5>
+            <p class="csn-phase-week">Week Y</p>
+            <p class="csn-phase-focus">Key focus description here.</p>
+        </div>
+    </div>
+
+    <div id="sticky-timeline-phase-indicator" class="sticky-phase-indicator">
+        <span class="sticky-phase-dot"></span>
+        <span class="sticky-phase-text"></span>
+    </div>
     <header class="hero">
         <div class="container">
             <div class="hero-content">
-                <h1>UX Research & Design Portfolio</h1>
-                <h2>Queensborough Community College – QCC Connect App</h2>
+                <p class="hero-welcome">Welcome to my Portfolio</p>
+                <h1>Jalen Banks</h1>
+                <h2 class="hero-subtitle">UX Research & Design</h2>
+                <p class="hero-project-intro">This portfolio showcases the redesign of the QCC Connect app, a dedicated mobile companion for Queensborough Community College students, aimed at improving their campus experience.</p>
             </div>
         </div>
+        <div class="scroll-down-indicator">
+            <i class="bi bi-chevron-down"></i>
+        </div>
     </header>
+
+    <nav id="sticky-portfolio-nav">
+        <div class="container">
+            <div class="nav-branding">Jalen Banks</div>
+            <ul>
+                <li><a href="#final-product-showcase">Showcase</a></li>
+                <li><a href="#project-process-section">Process</a></li>
+                <li><a href="#user-research-discovery-section">Research</a></li>
+                <li><a href="#sketching-wireframes-ideation">Design</a></li>
+                <li><a href="#user-testing-iteration-section">Testing</a></li>
+                <li><a href="#addressing-issues">Solutions</a></li>
+                <li><a href="#launch-future-considerations-section">Launch</a></li>
+            </ul>
+        </div>
+    </nav>
 
     <main>
         <section class="section" id="final-product-showcase">
             <div class="container">
                 <h2 class="section-title">Final Product Showcase</h2>
-                <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">The QCC Connect app was transformed into a user-friendly, responsive tool tailored to student needs. Explore the key features and design of the launched application below.</p>
-                <div class="row align-items-center" style="margin-top:2rem;">
-                    <div class="col-md-6 offset-md-3 d-flex justify-content-center align-items-center">
-                        <div class="carousel">
-                            <div class="carousel-screen">
-                                <img src="assets/QCC_connect_events_coursel.jpg" alt="Final App Screenshot" class="carousel-image">
-                            </div>
-                            <div class="carousel-nav">
-                                <button onclick="previousSlide()"><i class="bi bi-arrow-left"></i></button>
-                                <button onclick="nextSlide()"><i class="bi bi-arrow-right"></i></button>
+                <p>The QCC Connect app was transformed into a user-friendly, responsive tool tailored to student needs. Explore the key features and design of the launched application below.</p>
+                <div class="showcase-unified-card card">
+                    <h3 class="showcase-shared-heading">Key Features of Launched App</h3>
+                    <div class="showcase-unified-flex">
+                        <div class="showcase-features-wrapper">
+                            <ul class="feature-list">
+                                <li><i class="bi bi-moon-stars-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Dark Mode for enhanced accessibility</li>
+                                <li><i class="bi bi-bus-front-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Real-time Transit Tracker</li>
+                                <li><i class="bi bi-map-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Interactive Campus Map</li>
+                                <li><i class="bi bi-fingerprint" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Biometric Sign-in</li>
+                                <li><i class="bi bi-calendar3-week-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Redesigned Schedule View</li>
+                            </ul>
+                        </div>
+                        <div class="showcase-divider"></div>
+                        <div class="showcase-carousel-wrapper">
+                            <div class="carousel">
+                                <div class="carousel-screen">
+                                    <img src="assets/QCC_connect_events_coursel.jpg" alt="Final App Screenshot" class="carousel-image">
+                                </div>
+                                <div class="carousel-nav">
+                                    <button onclick="previousSlide()"><i class="bi bi-arrow-left"></i></button>
+                                    <button onclick="nextSlide()"><i class="bi bi-arrow-right"></i></button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                 <div class="card" style="margin-top: 3rem; max-width:600px; margin-left:auto; margin-right:auto;">
-                    <h3 style="text-align:center; margin-bottom:1.5rem;">Key Features of Launched App</h3>
-                    <ul class="feature-list">
-                        <li>🌙 Dark Mode for enhanced accessibility</li>
-                        <li>🚌 Real-time Transit Tracker</li>
-                        <li>📍 Interactive Campus Map</li>
-                        <li>🔐 Biometric Sign-in</li>
-                        <li>🗓️ Redesigned Schedule View</li>
-                    </ul>
-                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="project-process-section">
             <div class="container">
                 <h2 class="section-title">Project Process Overview</h2>
                 <div class="timeline">
+                    <div class="timeline-scroll-indicator"></div> <!-- Added scroll indicator -->
                     <div class="timeline-item">
                         <div class="timeline-content">
                             <div class="timeline-phase">Phase 1: Research & Discovery</div>
@@ -1705,33 +2576,208 @@
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="auditing-experience-section">
             <div class="container">
-                <h2 class="section-title">2. Auditing the Existing Experience</h2>
-                <p>Content for Auditing: Conduct a heuristic evaluation (usability review). Analyze the UI, navigation flow, and overall usability. Review analytics for user drop-offs or low engagement areas.</p>
+                <hr class="cool-divider">
+                <h2 class="section-title">Auditing the Existing Experience</h2>
+                
+                <div class="web-embed-reviews-container">
+                    <div class="step-badge">Step 1</div>
+                    <p class="step-intro">
+                        We began our heuristic evaluation by analyzing real user reviews to surface the most common pain points and usability issues.
+                    </p>
+                    <h4 style="text-align:center; margin-bottom:1.5rem; color: var(--light); opacity:0.9;">Student Feedback & Reviews (Old App)</h4>
+                    
+                    <div class="review-filter-buttons">
+                        <button type="button" data-filter="all" class="active">Show All</button>
+                        <button type="button" data-filter="5"><i class="bi bi-star-fill"></i> 5</button>
+                        <button type="button" data-filter="4"><i class="bi bi-star-fill"></i> 4</button>
+                        <button type="button" data-filter="3"><i class="bi bi-star-fill"></i> 3</button>
+                        <button type="button" data-filter="2"><i class="bi bi-star-fill"></i> 2</button>
+                        <button type="button" data-filter="1"><i class="bi bi-star-fill"></i> 1</button>
+                    </div>
+
+                    <div class="review-card" data-rating="4">
+                        <div class="review-header">
+                            <span class="review-name">Joseph07</span>
+                            <span class="review-date">12/05/2024</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">It's good but fix the schedule. That's it</p>
+                    </div>
+
+                    <div class="review-card" data-rating="2">
+                        <div class="review-header">
+                            <span class="review-name">Epicgamer61</span>
+                            <span class="review-date">09/16/2023</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">Horrible bug. Every time I press the login button nothing happens so I can't even log back into the app. Not sure why I'm experiencing these issues and if I'm the only one. Please fix this</p>
+                    </div>
+
+                    <div class="review-card" data-rating="5">
+                        <div class="review-header">
+                            <span class="review-name">Louisg999</span>
+                            <span class="review-date">07/17/2023</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="review-text">Qcc Easy to use</p>
+                    </div>
+
+                    <div class="review-card" data-rating="2">
+                        <div class="review-header">
+                            <span class="review-name">Vladimirarara</span>
+                            <span class="review-date">04/24/2023</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">Not optimized and updated regularly. It takes forever to load and sometimes it just freezes on a white screen. I haven't been able to see my schedule for a long time.</p>
+                        <div class="developer-response">
+                            <strong>Developer Response:</strong>
+                            <p>QCC Connect has been completely rebuilt and updated with an all new design. Most importantly, the schedule now works correctly. We hope you enjoy the new app. Please email us at qccconnect@qcc.cuny.edu for support on any issues you experience or to share ideas for how we can improve the app.</p>
+                        </div>
+                    </div>
+
+                    <div class="review-card" data-rating="5">
+                        <div class="review-header">
+                            <span class="review-name">Frontier 18</span>
+                            <span class="review-date">08/31/2021</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
+                        </div>
+                        <p class="review-text">Really easy layout. Easy to navigate and not difficult at all. Everything is nice and big on the screen and labled. App sometimes freezes but just uninstall and reinstall. Other than that it's great!</p>
+                    </div>
+
+                    <div class="review-card" data-rating="2">
+                        <div class="review-header">
+                            <span class="review-name">Diqm0nd</span>
+                            <span class="review-date">03/21/2025</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">Lagging/Glitching. Everytime i try to check my schedule the whole screen lags and glitches</p>
+                    </div>
+
+                    <div class="review-card" data-rating="1">
+                        <div class="review-header">
+                            <span class="review-name">nsal10</span>
+                            <span class="review-date">08/22/2022</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">I never write reviews. This app infuriated me to the point where I had to write a review about how absurd it is. I forgot my log in information and in order to access my login information I have to log in.... How in the world does that make sense... sorry QCC but step your game up, this app is atrocious. If I could give it zero stars I would, unfortunately I'm forced to put 1 star.</p>
+                    </div>
+
+                    <div class="review-card" data-rating="1">
+                        <div class="review-header">
+                            <span class="review-name">史宇超</span>
+                            <span class="review-date">01/29/2024</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">I can't check my schedule, because it kee... I can't check my schedule, because it keeps flashing</p>
+                    </div>
+
+                    <div class="review-card" data-rating="1">
+                        <div class="review-header">
+                            <span class="review-name">Nuetaaa</span>
+                            <span class="review-date">12/17/2024</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">Too glitchy. Can't even view schedule without it glitching</p>
+                    </div>
+
+                    <div class="review-card" data-rating="1">
+                        <div class="review-header">
+                            <span class="review-name">keepingupwtae</span>
+                            <span class="review-date">10/29/2024</span>
+                        </div>
+                        <div class="review-stars">
+                            <i class="bi bi-star-fill"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i><i class="bi bi-star"></i>
+                        </div>
+                        <p class="review-text">Terrible Bug. Every time I try to view my schedule it starts glitching and scrolling on its own.</p>
+                    </div>
+
+                </div>
+
+                <div class="step-badge" style="margin-top: 4rem;">Step 2</div>
+                <p class="step-intro">
+                    Next, we performed a formal heuristic evaluation using established usability principles to systematically identify additional issues and opportunities for improvement.
+                </p>
+                <p>The initial phase of the project involved a comprehensive audit of the existing QCC Connect application. This critical step aimed to identify key usability issues, pain points in the user journey, and areas where the app failed to meet student expectations. The process included a heuristic evaluation, an in-depth analysis of the user interface and navigation flows, and a review of available analytics to understand user engagement and drop-off rates. The findings from this audit, visually exemplified by screenshots of the previous interface, clearly indicated a need for significant improvements in clarity, performance, and feature set to better serve the student body.</p>
+                <div style="text-align: center; margin-top: 2rem; margin-bottom: 2rem;">
+                    <img src="assets/OLD_QCC_APP.png" alt="Examples of the old QCC Connect app interface" style="max-width: 100%; border-radius: 10px; box-shadow: 0 5px 15px rgba(0,0,0,0.1);">
+                    <p style="font-size: 0.9rem; color: var(--light); opacity: 0.8; margin-top: 1rem;"><i>Examples of the previous QCC Connect app interface, highlighting areas for improvement.</i></p>
+                </div>
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="user-research-discovery-section">
             <div class="container">
-                <h2 class="section-title">3. User Research & Discovery</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">User Research & Discovery</h2>
                 <p style="margin-bottom: 2rem;">To gather comprehensive user data, a multi-faceted research approach was employed, including: <br/>• Surveys & Screener Forms for recruitment <br/>• In-depth interviews with current students <br/>• Usability testing of the existing app to observe real-world frustrations <br/>• A competitive analysis to benchmark against similar products.</p>
                 
-                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Participant Overview</h3>
+                <h3 class="participant-overview-title">Participant Overview</h3>
                 <div class="row text-center" style="margin-top: 1rem;">
                     <div class="col-md-6">
-                        <div class="chart-container" id="majorsChartContainer">
-                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Survey Participants by Major</h4>
-                            <canvas id="majorsChart"></canvas>
+                        <div class="chart-card-wrapper">
+                            <h4>Survey Participants by Major</h4>
+                            <div class="chart-container" id="majorsChartContainer">
+                                <canvas id="majorsChart"></canvas>
+                            </div>
                         </div>
                     </div>
                     <div class="col-md-6">
-                        <div class="chart-container" id="methodsChartContainer">
-                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Participants by Method</h4>
-                            <canvas id="methodsChart"></canvas>
+                        <div class="chart-card-wrapper">
+                            <h4>Participants by Method</h4>
+                            <div class="chart-container" id="methodsChartContainer">
+                                <canvas id="methodsChart"></canvas>
+                            </div>
                         </div>
                     </div>
                 </div>
+
+                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Insights from Interviews</h3>
+                <div class="insights-grid" style="margin-top: 1rem;">
+                    <div class="insight-category performance">
+                        <div class="insight-header"><span class="insight-icon">📱</span><h3 class="insight-title">Performance</h3></div>
+                        <div class="insight-quote"><p>"Pages load very slowly..."</p></div> <div class="insight-quote"><p>"There's a noticeable delay..."</p></div> <div class="insight-quote"><p>"The app freezes..."</p></div>
+                    </div>
+                    <div class="insight-category uiux">
+                        <div class="insight-header"><span class="insight-icon">🎨</span><h3 class="insight-title">UI/UX Design</h3></div>
+                        <div class="insight-quote"><p>"The layout is confusing..."</p></div> <div class="insight-quote"><p>"Some buttons don't look like buttons..."</p></div> <div class="insight-quote"><p>"The schedule section feels cluttered..."</p></div>
+                    </div>
+                    <div class="insight-category features">
+                        <div class="insight-header"><span class="insight-icon">🛠️</span><h3 class="insight-title">Features</h3></div>
+                        <div class="insight-quote"><p>"It would be useful to see the bus schedule..."</p></div> <div class="insight-quote"><p>"The campus map is too basic..."</p></div> <div class="insight-quote"><p>"I wish I could see my student ID..."</p></div>
+                    </div>
+                    <div class="insight-category stability">
+                        <div class="insight-header"><span class="insight-icon">🧱</span><h3 class="insight-title">Stability</h3></div>
+                        <div class="insight-quote"><p>"Sometimes the app logs me out randomly..."</p></div> <div class="insight-quote"><p>"It crashed when I was trying to look up my course list..."</p></div> <div class="insight-quote"><p>"There were multiple times I couldn't log in..."</p></div>
+                    </div>
+                    <div class="insight-category usefulness">
+                        <div class="insight-header"><span class="insight-icon">💡</span><h3 class="insight-title">Usefulness</h3></div>
+                        <div class="insight-quote"><p>"The app has potential, but I only use it for one or two things..."</p></div> <div class="insight-quote"><p>"It doesn't really add much beyond..."</p></div> <div class="insight-quote"><p>"Most of my classmates don't even know..."</p></div>
+                    </div>
+                </div>
+
+                <p style="margin-top: 3rem; margin-bottom: 1.5rem; font-size: 1.05rem; line-height: 1.7; opacity: 0.9; max-width: 800px; margin-left: auto; margin-right: auto;">
+                    The key user personas were then developed by synthesizing these direct user insights from interviews, along with broader patterns identified from survey responses and observations during usability testing of the original application. This process allowed for the creation of representative archetypes that encapsulate the primary goals, motivations, frustrations, and behaviors of distinct user segments within the QCC student body.
+                </p>
 
                 <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Key User Personas</h3>
                 <div class="persona-grid">
@@ -1808,36 +2854,13 @@
                     <!-- Optional Persona 3 - can be added here following the same structure -->
 
                 </div>
-
-                <h3 class="section-title" style="font-size: 2rem; margin-top: 3rem; margin-bottom:1.5rem;">Insights from Interviews</h3>
-                <div class="insights-grid" style="margin-top: 1rem;">
-                    <div class="insight-category performance">
-                        <div class="insight-header"><span class="insight-icon">📱</span><h3 class="insight-title">Performance</h3></div>
-                        <div class="insight-quote"><p>"Pages load very slowly..."</p></div> <div class="insight-quote"><p>"There's a noticeable delay..."</p></div> <div class="insight-quote"><p>"The app freezes..."</p></div>
-                    </div>
-                    <div class="insight-category uiux">
-                        <div class="insight-header"><span class="insight-icon">🎨</span><h3 class="insight-title">UI/UX Design</h3></div>
-                        <div class="insight-quote"><p>"The layout is confusing..."</p></div> <div class="insight-quote"><p>"Some buttons don't look like buttons..."</p></div> <div class="insight-quote"><p>"The schedule section feels cluttered..."</p></div>
-                    </div>
-                    <div class="insight-category features">
-                        <div class="insight-header"><span class="insight-icon">🛠️</span><h3 class="insight-title">Features</h3></div>
-                        <div class="insight-quote"><p>"It would be useful to see the bus schedule..."</p></div> <div class="insight-quote"><p>"The campus map is too basic..."</p></div> <div class="insight-quote"><p>"I wish I could see my student ID..."</p></div>
-                    </div>
-                    <div class="insight-category stability">
-                        <div class="insight-header"><span class="insight-icon">🧱</span><h3 class="insight-title">Stability</h3></div>
-                        <div class="insight-quote"><p>"Sometimes the app logs me out randomly..."</p></div> <div class="insight-quote"><p>"It crashed when I was trying to look up my course list..."</p></div> <div class="insight-quote"><p>"There were multiple times I couldn't log in..."</p></div>
-                    </div>
-                    <div class="insight-category usefulness">
-                        <div class="insight-header"><span class="insight-icon">💡</span><h3 class="insight-title">Usefulness</h3></div>
-                        <div class="insight-quote"><p>"The app has potential, but I only use it for one or two things..."</p></div> <div class="insight-quote"><p>"It doesn't really add much beyond..."</p></div> <div class="insight-quote"><p>"Most of my classmates don't even know..."</p></div>
-                    </div>
-                </div>
             </div>
         </section>
         
-        <section class="section">
+        <section class="section" id="synthesis-problem-definition-section">
             <div class="container">
-                <h2 class="section-title">4. Synthesis & Problem Definition</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">Synthesis & Problem Definition</h2>
                 <p>Feedback from user research was synthesized using affinity maps (insights detailed above) to identify recurring themes. This process led to the definition of the following key problem statements that guided the redesign efforts:</p>
                 <div class="problems-grid" style="margin-top:1rem;">
                     <div class="problem-card">
@@ -1864,17 +2887,19 @@
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="defining-mvp-opportunities-section">
             <div class="container">
-                <h2 class="section-title">5. Defining MVP & Opportunities</h2>
-                <p>Based on the synthesized research and problem statements, high-impact improvements were prioritized to define a Minimum Viable Product (MVP). A crucial consideration throughout this process was the adherence to CUNY\'s WCAG 2.1 Level AA accessibility standards, ensuring the app would be usable by all students. User stories were then crafted to ensure proposed solutions directly addressed student needs and goals while meeting these accessibility requirements.</p>
+                <hr class="cool-divider">
+                <h2 class="section-title">Defining MVP & Opportunities</h2>
+                <p>Based on the synthesized research and problem statements, high-impact improvements were prioritized to define a Minimum Viable Product (MVP). A crucial consideration throughout this process was the adherence to CUNY's WCAG 2.1 Level AA accessibility standards, ensuring the app would be usable by all students. User stories were then crafted to ensure proposed solutions directly addressed student needs and goals while meeting these accessibility requirements.</p>
                 <!-- Placeholder for example user stories or MVP list -->
             </div>
         </section>
 
         <section class="section" id="sketching-wireframes-ideation">
             <div class="container">
-                <h2 class="section-title">6. Sketching, Wireframes & Ideation</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">Wireframes & Ideation</h2>
                  <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">Low-fidelity wireframes were created to map out core user flows and screen layouts based on initial research and problem statements. These helped in visualizing the structure before detailed design.</p>
                 <div class="sketches-grid"> <!-- Reusing sketches-grid for layout -->
                     
@@ -2003,9 +3028,10 @@
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="prototyping-section">
             <div class="container">
-                <h2 class="section-title">7. Prototyping</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">Prototyping</h2>
                 <p style="text-align: center; margin-bottom: 2rem; opacity: 0.8;">Mid-to-high fidelity wireframes were developed to solidify the user interface structure and core interactions for key screens. These provided a clearer blueprint for visual design and development, evolving from earlier sketches based on user feedback.</p>
                 
                 <div class="sketches-grid"> <!-- Reusing sketches-grid for layout -->
@@ -2386,16 +3412,62 @@
             </div>
         </section>
 
-        <section class="section">
+        <section class="section" id="user-testing-iteration-section">
             <div class="container">
-                <h2 class="section-title">8. User Testing & Iteration</h2>
-                <p>The new prototypes underwent rigorous user testing. Feedback was collected on ease of use, satisfaction, and overall understanding of the new design. Designs were iteratively refined based on this feedback until usability goals were met. Key metrics tracked include:</p>
-                <div class="row text-center" style="margin-top: 2rem;">
-                    <div class="col-md-6 offset-md-3">
-                         <div class="chart-container" id="metricsChartContainer">
-                            <h4 style="color: var(--light); margin-bottom: 1rem; text-align:center;">Usability Testing Metrics (Post-Prototype)</h4>
-                            <canvas id="metricsChart"></canvas>
+                <hr class="cool-divider">
+                <h2 class="section-title">Usability Metrics: Original vs. Redesigned App</h2>
+                <p class="metrics-intro-paragraph">To showcase the impact of the redesign, this section presents key usability metrics. First, a baseline from the original app, followed by the results achieved after testing the new prototypes. This comparison highlights the improvements in user experience.</p>
+                
+                <div class="metrics-toggle-buttons">
+                    <button id="showOriginalMetricsBtn" class="active">View Original App Data</button>
+                    <button id="showRedesignedMetricsBtn">View Redesigned App Data</button>
+                </div>
+
+                <div id="originalMetricsContainer" class="metrics-grid-container">
+                    <div class="metric-card">
+                        <h4>Original: Avg. Task Time</h4>
+                        <div class="chart-container" id="taskTimeChartContainer-original">
+                            <canvas id="taskTimeChartCanvas-original"></canvas>
                         </div>
+                        <p class="metric-insight">Baseline: <strong>95 seconds</strong> (Higher indicates difficulty)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Original: User Error Rate</h4>
+                        <div class="chart-container" id="errorRateChartContainer-original">
+                            <canvas id="errorRateChartCanvas-original"></canvas>
+                        </div>
+                        <p class="metric-insight">Baseline: <strong>35%</strong> (Higher indicates frequent errors)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Original: SUS Score</h4>
+                        <div class="chart-container" id="susScoreChartContainer-original">
+                            <canvas id="susScoreChartCanvas-original"></canvas>
+                        </div>
+                        <p class="metric-insight">Baseline: <strong>42 / 100</strong> (Significantly below average usability)</p>
+                    </div>
+                </div>
+
+                <div id="redesignedMetricsContainer" class="metrics-grid-container metrics-set-hidden">
+                    <div class="metric-card">
+                        <h4>Redesigned: Avg. Task Time</h4>
+                        <div class="chart-container" id="taskTimeChartContainer">
+                            <canvas id="taskTimeChartCanvas"></canvas>
+                        </div>
+                        <p class="metric-insight">Achieved: <strong>30 seconds</strong> (Lower is better)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Redesigned: User Error Rate</h4>
+                        <div class="chart-container" id="errorRateChartContainer">
+                            <canvas id="errorRateChartCanvas"></canvas>
+                        </div>
+                        <p class="metric-insight">Achieved: <strong>8%</strong> (Lower is better)</p>
+                    </div>
+                    <div class="metric-card">
+                        <h4>Redesigned: SUS Score</h4>
+                        <div class="chart-container" id="susScoreChartContainer">
+                            <canvas id="susScoreChartCanvas"></canvas>
+                        </div>
+                        <p class="metric-insight">Achieved: <strong>78 / 100</strong> (Higher is better; &gt;68 is above average)</p>
                     </div>
                 </div>
             </div>
@@ -2403,7 +3475,8 @@
 
         <section class="section" id="team-collaboration-handoff"> 
              <div class="container">
-                <h2 class="section-title">9. Team Collaboration & Handoff</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">Team Collaboration & Handoff</h2>
                 <p>Before final handoff to the development team, the app's UI design toolkit required formal approval from CUNY. This involved submitting a Graphic Design and Identity Services application to ensure compliance with university branding and visual standards. Once approved, final designs and assets were provided to developers. Close collaboration, including QA sessions, then ensured implementation fidelity. The matrix below outlines team responsibilities for addressing key issue categories identified during research.</p>
                 <div class="matrix-container" style="margin-top:1rem;">
                     <table class="matrix-table">
@@ -2431,7 +3504,7 @@
                         <span class="category-badge badge-performance">Performance</span>
                         <h4>Optimized App Speed & Responsiveness</h4>
                         <p>The Development and Engineering teams undertook significant code refactoring and backend optimizations. This included streamlining database queries, optimizing image assets, and implementing more efficient data loading mechanisms to drastically reduce loading times and eliminate freezing or lag issues.</p>
-                        <img src="assets/placeholder-solution.png" alt="Performance Optimization Visual">
+                        <img src="assets/QCC_Connect_SQL_Database.jpg" alt="Performance Optimization Visual">
                     </div>
 
                     <!-- UI/UX Design Solution -->
@@ -2439,7 +3512,7 @@
                         <span class="category-badge badge-uiux">UI/UX Design</span>
                         <h4>Intuitive Redesign & Clear Navigation</h4>
                         <p>The UX Design and Product Design teams completely overhauled the app's interface. This involved establishing a clear visual hierarchy, redesigning confusing layouts (like the schedule), ensuring interactive elements were clearly identifiable, and simplifying navigation pathways to make information more accessible.</p>
-                        <img src="assets/placeholder-solution.png" alt="UI/UX Redesign Visual">
+                        <img src="assets/usability-testing.jpg" alt="UI/UX Redesign Visual">
                     </div>
 
                     <!-- Features Solution -->
@@ -2447,7 +3520,7 @@
                         <span class="category-badge badge-features">Features</span>
                         <h4>Implemented High-Demand Features</h4>
                         <p>Based on student feedback, the Product Management and Engineering teams prioritized and integrated essential new features. These included a real-time transit tracker, an interactive campus map, and a digital student ID card, directly addressing previously missing functionalities critical for daily student life.</p>
-                        <img src="assets/placeholder-solution.png" alt="New Features Visual">
+                        <img src="assets/QCC_Connect_app_Map.jpg" alt="New Features Visual">
                     </div>
 
                     <!-- Stability Solution -->
@@ -2455,7 +3528,7 @@
                         <span class="category-badge badge-stability">Stability</span>
                         <h4>Enhanced App Stability & Reliability</h4>
                         <p>The QA/Testing and Engineering teams focused on identifying and resolving critical bugs that caused app crashes, login issues, and random logouts. Rigorous testing cycles and debugging efforts led to a significantly more stable and reliable application.</p>
-                        <img src="assets/placeholder-solution.png" alt="App Stability Visual">
+                        <img src="assets/QCC_Connect_app_Debugging.png" alt="App Stability Visual">
                     </div>
 
                     <!-- Usefulness Solution -->
@@ -2463,16 +3536,47 @@
                         <span class="category-badge badge-usefulness">Usefulness</span>
                         <h4>Increased Awareness & Engagement</h4>
                         <p>To address low awareness, the Marketing and UX Research teams collaborated on initiatives. The Marketing department created introductory pamphlets about the app for new students and launched a promotional campaign on digital signage screens across campus, highlighting the app's benefits and new features, thereby boosting its perceived usefulness and encouraging adoption.</p>
-                        <img src="assets/placeholder-solution.png" alt="Usefulness Campaign Visual">
+                        <img src="assets/IMG_5619.jpeg" alt="Usefulness Campaign Visual">
                     </div>
                 </div>
             </div>
         </section>
         
-        <section class="section">
+        <section class="section" id="launch-future-considerations-section">
             <div class="container">
-                <h2 class="section-title">10. Launch & Future Considerations</h2>
+                <hr class="cool-divider">
+                <h2 class="section-title">Launch & Future Considerations</h2>
                 <p>Following the successful redesign and development process, the QCC Connect app was launched, transformed into a user-friendly and responsive tool (as showcased at the beginning of this portfolio). Post-launch analytics and user support channels are being actively monitored. These ongoing insights will inform future updates, iterations, and continued improvements to the student experience, ensuring the app remains a valuable resource for the QCC community.</p>
+
+                <div class="showcase-unified-card card" style="margin-top: 3rem;">
+                    <h3 class="showcase-shared-heading" style="margin-bottom: 2rem; text-align: left; font-size: 1.8rem; display: block;">Launched App Highlights</h3>
+                    <div class="showcase-unified-flex">
+                        <div class="showcase-features-wrapper" style="padding-right: 1rem;">
+                            <h4 style="font-size: 1.3rem; color: var(--primary); margin-bottom: 1rem;">Key Features Recap</h4>
+                            <ul class="feature-list">
+                                <li><i class="bi bi-moon-stars-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Dark Mode for enhanced accessibility</li>
+                                <li><i class="bi bi-bus-front-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Real-time Transit Tracker</li>
+                                <li><i class="bi bi-map-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Interactive Campus Map</li>
+                                <li><i class="bi bi-fingerprint" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Biometric Sign-in</li>
+                                <li><i class="bi bi-calendar3-week-fill" style="margin-right: 0.75rem; color: var(--secondary); font-size: 1.2em;"></i>Redesigned Schedule View</li>
+                            </ul>
+                        </div>
+                        <div class="showcase-divider" style="margin: 0 1.5rem;"></div>
+                        <div class="showcase-carousel-wrapper" style="padding-left: 1rem;">
+                             <h4 style="font-size: 1.3rem; color: var(--primary); margin-bottom: 1rem; text-align: center;">App Snapshots</h4>
+                            <div class="carousel">
+                                <div class="carousel-screen">
+                                    <img src="assets/QCC_connect_events_coursel.jpg" alt="Final App Screenshot" class="carousel-image">
+                                </div>
+                                <div class="carousel-nav">
+                                    <button onclick="previousSlide()"><i class="bi bi-arrow-left"></i></button>
+                                    <button onclick="nextSlide()"><i class="bi bi-arrow-right"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
             </div>
         </section>
 
@@ -2482,9 +3586,9 @@
         <div class="container">
             <p>&copy; 2024 Jalen Banks – UX Designer</p>
             <div class="social-links">
-                <a href="#"><i class="bi bi-linkedin"></i></a>
-                <a href="#"><i class="bi bi-github"></i></a>
-                <a href="#"><i class="bi bi-envelope"></i></a>
+                <a href="https://www.linkedin.com/in/jalen-banks" target="_blank" rel="noopener noreferrer"><i class="bi bi-linkedin"></i></a>
+                <a href="https://github.com/jbanks222" target="_blank" rel="noopener noreferrer"><i class="bi bi-github"></i></a>
+                <a href="mailto:Jalenbanks123@gmail.com"><i class="bi bi-envelope"></i></a>
             </div>
         </div>
     </footer>
@@ -2537,7 +3641,7 @@
             new Chart(document.getElementById('majorsChart').getContext('2d'), {
                 type: 'pie',
                 data: { labels: ['Nursing', 'Engineering', 'Liberal Arts', 'Business'], datasets: [{ data: [45,15,25,15], backgroundColor: ['#7B61FF', '#00F5A0', '#FF61F5', '#FFD700']}]},
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#F5F5F5', font: {size: 14}, padding: 20}}, tooltip: { callbacks: { label: function(context) { let label = context.label || ''; if (label) {label += ': ';} if (context.parsed !== null) { label += context.parsed; const total = context.chart.getDatasetMeta(0).total; const percentage = ((context.parsed / total) * 100).toFixed(1) + '%'; label += ' (' + percentage + ')';} return label;}}}} }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#F5F5F5', font: {size: 13}, padding: 18}}, tooltip: { callbacks: { label: function(context) { let label = context.label || ''; if (label) {label += ': ';} if (context.parsed !== null) { label += context.parsed; const total = context.chart.getDatasetMeta(0).total; const percentage = ((context.parsed / total) * 100).toFixed(1) + '%'; label += ' (' + percentage + ')';} return label;}}}} }
             });
         }
 
@@ -2545,17 +3649,689 @@
             new Chart(document.getElementById('methodsChart').getContext('2d'), {
                 type: 'bar',
                 data: { labels: ['Surveys','Interviews','Usability Tests'], datasets: [{ label:'Participants', data:[110,15,10], backgroundColor:'#7B61FF', borderRadius: 5, borderSkipped: false }]},
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display:false}, tooltip: {callbacks: { title: function(c) { return c[0].label; }, label: function(c) { return 'Participants: ' + c.parsed.y;}}}}, scales: { y: { beginAtZero:true, grid:{ color: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.1)'}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Number of Participants', color:'#F5F5F5', font:{size:14}}}, x: { grid:{display:false}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Research Method', color:'#F5F5F5', font: {size:14}}}} }
+                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display:false}, tooltip: {callbacks: { title: function(c) { return c[0].label; }, label: function(c) { return 'Participants: ' + c.parsed.y;}}}}, scales: { y: { beginAtZero:true, grid:{ color: 'rgba(255,255,255,0.08)', borderColor: 'rgba(255,255,255,0.08)'}, ticks:{color:'#E0E0E0', font: {size: 11}}, title: {display:true, text:'Number of Participants', color:'#F0F0F0', font:{size:13}}}, x: { grid:{display:false}, ticks:{color:'#E0E0E0', font: {size: 11}}, title: {display:true, text:'Research Method', color:'#F0F0F0', font: {size:13}}}} }
             });
         }
 
-        if (document.getElementById('metricsChart')) {
-            new Chart(document.getElementById('metricsChart').getContext('2d'), {
-                type: 'line',
-                data: { labels: ['Task Time (s)','Error Rate (%)','SUS Score'], datasets: [{ label:'Metrics', data:[45,8,78], borderColor:'#00F5A0', backgroundColor:'rgba(0,245,160,0.2)', tension:0.4, fill:true, pointBackgroundColor:'#00F5A0', pointBorderColor:'#F5F5F5', pointRadius:5, pointHoverRadius:8, pointBorderWidth:2, pointHoverBorderWidth:2 }]},
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: {display:false}, tooltip: {callbacks: { title: function(c) { return c[0].label; }, label: function(c) { return 'Value: ' + c.parsed.y;}}}}, scales: { y: { beginAtZero:true, grid:{ color: 'rgba(255,255,255,0.1)', borderColor: 'rgba(255,255,255,0.1)'}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Value / Score', color:'#F5F5F5', font:{size:14}}}, x: { grid:{display:false}, ticks:{color:'#F5F5F5'}, title: {display:true, text:'Usability Metric', color:'#F5F5F5', font: {size:14}}}} }
+        // New individual metric charts
+        if (document.getElementById('taskTimeChartCanvas')) {
+            new Chart(document.getElementById('taskTimeChartCanvas').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Task Time'],
+                    datasets: [{
+                        label: 'Seconds',
+                        data: [30],
+                        backgroundColor: 'rgba(123, 97, 255, 0.7)', // Primary color with alpha
+                        borderColor: 'rgb(123, 97, 255)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + ' seconds'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 110, // Set common max for Y-axis
+                            title: { display: true, text: 'Time (s)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false } // Hide x-axis labels for single bar
+                        }
+                    }
+                }
             });
         }
+
+        if (document.getElementById('errorRateChartCanvas')) {
+            new Chart(document.getElementById('errorRateChartCanvas').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Error Rate'],
+                    datasets: [{
+                        label: 'Percentage',
+                        data: [8],
+                        backgroundColor: 'rgba(255, 107, 107, 0.7)', // A reddish color for errors, with alpha
+                        borderColor: 'rgb(255, 107, 107)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + '%'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100, // Error rate is a percentage
+                            title: { display: true, text: 'Rate (%)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        if (document.getElementById('susScoreChartCanvas')) {
+            new Chart(document.getElementById('susScoreChartCanvas').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['SUS Score'],
+                    datasets: [{
+                        label: 'Score',
+                        data: [78],
+                        backgroundColor: 'rgba(0, 245, 160, 0.7)', // Secondary color (greenish) with alpha
+                        borderColor: 'rgb(0, 245, 160)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + ' / 100'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100, // SUS Score is 0-100
+                            title: { display: true, text: 'Score (0-100)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        // --- Original App Metrics Charts ---
+        if (document.getElementById('taskTimeChartCanvas-original')) {
+            new Chart(document.getElementById('taskTimeChartCanvas-original').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Original Task Time'],
+                    datasets: [{
+                        label: 'Seconds',
+                        data: [95],
+                        backgroundColor: 'rgba(123, 97, 255, 0.7)',
+                        borderColor: 'rgb(123, 97, 255)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + ' seconds'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 110, // Set common max for Y-axis
+                            title: { display: true, text: 'Time (s)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        if (document.getElementById('errorRateChartCanvas-original')) {
+            new Chart(document.getElementById('errorRateChartCanvas-original').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Original Error Rate'],
+                    datasets: [{
+                        label: 'Percentage',
+                        data: [35],
+                        backgroundColor: 'rgba(255, 107, 107, 0.7)',
+                        borderColor: 'rgb(255, 107, 107)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + '%'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Rate (%)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+
+        if (document.getElementById('susScoreChartCanvas-original')) {
+            new Chart(document.getElementById('susScoreChartCanvas-original').getContext('2d'), {
+                type: 'bar',
+                data: {
+                    labels: ['Original SUS Score'],
+                    datasets: [{
+                        label: 'Score',
+                        data: [42],
+                        backgroundColor: 'rgba(0, 245, 160, 0.7)',
+                        borderColor: 'rgb(0, 245, 160)',
+                        borderWidth: 1,
+                        borderRadius: 5,
+                        barPercentage: 0.5
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: { callbacks: { label: function(context) { return context.raw + ' / 100'; } } }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            title: { display: true, text: 'Score (0-100)', color: '#F0F0F0', font: {size:12} },
+                            grid: { color: 'rgba(255,255,255,0.08)' },
+                            ticks: { color: '#E0E0E0', font: {size: 11} }
+                        },
+                        x: {
+                            grid: { display: false },
+                            ticks: { display: false }
+                        }
+                    }
+                }
+            });
+        }
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const filterButtons = document.querySelectorAll('.review-filter-buttons button');
+            const reviewCards = document.querySelectorAll('.review-card');
+
+            // Show all reviews by default
+            reviewCards.forEach(card => card.classList.add('visible'));
+
+            filterButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // Manage active button state
+                    filterButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const filterValue = this.getAttribute('data-filter');
+
+                    reviewCards.forEach(card => {
+                        if (filterValue === 'all' || card.getAttribute('data-rating') === filterValue) {
+                            card.classList.add('visible');
+                        } else {
+                            card.classList.remove('visible');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+    <script>
+        // Timeline Scroll Interaction
+        document.addEventListener('DOMContentLoaded', function() {
+            const timeline = document.querySelector('.timeline');
+            const scrollIndicator = document.querySelector('.timeline-scroll-indicator');
+            const timelineItems = Array.from(document.querySelectorAll('.timeline-item'));
+
+            if (!timeline || !scrollIndicator || timelineItems.length === 0) {
+                return; // Exit if essential elements are not found
+            }
+
+            function updateTimelineState() {
+                const timelineRect = timeline.getBoundingClientRect();
+                let activeItem = null;
+                // Use a trigger point slightly below the top of the viewport for activation
+                const triggerPoint = window.innerHeight * 0.33; 
+
+                timelineItems.forEach(item => {
+                    const itemRect = item.getBoundingClientRect();
+                    // Check if the item is sufficiently in view
+                    if (itemRect.top < triggerPoint && itemRect.bottom > triggerPoint - itemRect.height * 0.5) {
+                        activeItem = item;
+                    }
+                });
+
+                // Fallback to the first item if no item is clearly active above the fold, or last if scrolled past all
+                if (!activeItem) {
+                    if (window.scrollY < timelineRect.top) {
+                        activeItem = timelineItems[0];
+                    } else if (window.scrollY > (timelineRect.bottom - window.innerHeight)) {
+                        activeItem = timelineItems[timelineItems.length - 1];
+                    } else {
+                        // Find the one closest to the trigger point from above
+                         let minDistance = Infinity;
+                        for (let i = 0; i < timelineItems.length; i++) {
+                            const itemRect = timelineItems[i].getBoundingClientRect();
+                            const distanceToTrigger = Math.abs(itemRect.top - triggerPoint);
+                            if (itemRect.bottom > triggerPoint && itemRect.top < triggerPoint + window.innerHeight * 0.5) { // item is somewhat visible
+                                if (distanceToTrigger < minDistance) {
+                                    minDistance = distanceToTrigger;
+                                    activeItem = timelineItems[i];
+                                }
+                            }
+                        }
+                        if (!activeItem) activeItem = timelineItems[0]; // Default to first if still none
+                    }
+                }
+
+                timelineItems.forEach(item => {
+                    item.classList.remove('active-timeline-item');
+                });
+
+                if (activeItem) {
+                    activeItem.classList.add('active-timeline-item');
+                    
+                    const activeContent = activeItem.querySelector('.timeline-content');
+                    if (activeContent) {
+                        // Position of the center of the timeline-content relative to the timeline container
+                        const contentRect = activeContent.getBoundingClientRect();
+                        const timelineContainerRect = timeline.getBoundingClientRect();
+                        
+                        // Calculate the vertical center of the content box of the active item
+                        let indicatorTop = (contentRect.top - timelineContainerRect.top) + (activeContent.offsetHeight / 2);
+                        
+                        scrollIndicator.style.top = `${indicatorTop}px`;
+                        scrollIndicator.style.opacity = '1';
+                    }
+                } else {
+                    scrollIndicator.style.opacity = '0';
+                }
+            }
+
+            window.addEventListener('scroll', updateTimelineState, { passive: true });
+            window.addEventListener('resize', updateTimelineState);
+            updateTimelineState(); // Initial call to set state
+        });
+    </script>
+    <script>
+        // Sticky Timeline Phase Indicator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const stickyIndicator = document.getElementById('sticky-timeline-phase-indicator');
+            const stickyText = stickyIndicator.querySelector('.sticky-phase-text');
+
+            const sectionPhaseMapping = {
+                'final-product-showcase': null, // Hide
+                'project-process-section': null, // Hide
+                'auditing-experience-section': 'Phase 1: Research & Discovery (Week 1)',
+                'user-research-discovery-section': 'Phase 1: Research & Discovery (Week 1)',
+                'synthesis-problem-definition-section': 'Phase 2: Ideation (Week 2)',
+                'defining-mvp-opportunities-section': 'Phase 3: Planning & Structure (Week 3)',
+                'sketching-wireframes-ideation': 'Phase 4: Design (Week 4)',
+                'prototyping-section': 'Phase 4: Design (Week 4)',
+                'user-testing-iteration-section': 'Phase 5: Testing & Iteration (Week 5)',
+                'team-collaboration-handoff': 'Phase 5: Handoff',
+                'addressing-issues': 'Solutions Overview',
+                'launch-future-considerations-section': 'Launch & Future'
+            };
+
+            const sections = Object.keys(sectionPhaseMapping).map(id => document.getElementById(id)).filter(el => el != null);
+            let currentPhaseText = '';
+
+            const observerOptions = {
+                root: null, // viewport
+                rootMargin: '0px',
+                threshold: 0.3 // Section is 30% visible
+            };
+
+            const intersectionObserver = new IntersectionObserver((entries) => {
+                let mostVisibleSection = null;
+                let maxRatio = 0;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        mostVisibleSection = entry.target;
+                    }
+                });
+
+                if (mostVisibleSection) {
+                    const phaseText = sectionPhaseMapping[mostVisibleSection.id];
+                    if (phaseText) {
+                        const newText = `Now Viewing: ${phaseText}`;
+                        if (currentPhaseText !== newText) {
+                            stickyText.textContent = newText;
+                            currentPhaseText = newText;
+                        }
+                        stickyIndicator.classList.add('visible');
+                    } else {
+                        stickyIndicator.classList.remove('visible');
+                        currentPhaseText = ''; // Reset so it updates if next section is visible
+                    }
+                } else {
+                    // If no specific section is deemed most visible by the threshold,
+                    // potentially hide or maintain last known state, 
+                    // for now, we'll rely on a section becoming dominant.
+                    // Fallback: if nothing is intersecting (e.g. scrolled between sections far apart)
+                    // we might want to hide it, or keep the last known.
+                    // Let's hide if nothing is above threshold and not already hidden by mapping.
+                    if (!stickyIndicator.classList.contains('visible') || !Object.values(sectionPhaseMapping).includes(currentPhaseText.replace('Now Viewing: ', ''))) {
+                       // if current text is not in a valid phase, and its not visible (or it is a section to hide)
+                    }
+                }
+            }, observerOptions);
+
+            sections.forEach(section => intersectionObserver.observe(section));
+
+            // Handle initial state for sections that might be in view on load but not trigger observer immediately
+            // Or sections that should hide indicator if they are at top.
+            function checkInitialState() {
+                let activeSectionFound = false;
+                for (const section of sections) {
+                    const rect = section.getBoundingClientRect();
+                    if (rect.top < window.innerHeight && rect.bottom >= 0 && (rect.top < window.innerHeight * 0.5)) { // A good portion of the section is visible
+                        const phaseText = sectionPhaseMapping[section.id];
+                        if (phaseText) {
+                            const newText = `Now Viewing: ${phaseText}`;
+                            stickyText.textContent = newText;
+                            currentPhaseText = newText;
+                            stickyIndicator.classList.add('visible');
+                            activeSectionFound = true;
+                            break;
+                        } else if (phaseText === null) {
+                            stickyIndicator.classList.remove('visible');
+                            currentPhaseText = '';
+                            activeSectionFound = true; // Found a section that should hide it
+                            break;
+                        }
+                    }
+                }
+                if (!activeSectionFound) {
+                     stickyIndicator.classList.remove('visible'); // Hide if no relevant section at top
+                }
+            }
+            checkInitialState(); // Call on load
+
+        });
+    </script>
+    <script>
+        // Chrono-Scroll Navigator Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const navigator = document.getElementById('chrono-scroll-navigator');
+            const track = navigator.querySelector('.csn-track');
+            const marker = navigator.querySelector('.csn-marker');
+            const spotlightCard = navigator.querySelector('.csn-spotlight-card');
+            const phaseNodes = Array.from(navigator.querySelectorAll('.csn-phase-node'));
+            
+            const spotlightTitle = spotlightCard.querySelector('.csn-phase-title');
+            const spotlightWeek = spotlightCard.querySelector('.csn-phase-week');
+            const spotlightFocus = spotlightCard.querySelector('.csn-phase-focus');
+
+            const sectionPhaseData = {
+                'final-product-showcase': null, // Hide navigator
+                'project-process-section': null, // Hide navigator
+                'auditing-experience-section': { phase: 1, title: 'Research & Discovery', week: 'Week 1', focus: 'Uncovering Insights' },
+                'user-research-discovery-section': { phase: 1, title: 'Research & Discovery', week: 'Week 1', focus: 'Uncovering Insights' },
+                'synthesis-problem-definition-section': { phase: 2, title: 'Ideation', week: 'Week 2', focus: 'Defining the Vision' },
+                'defining-mvp-opportunities-section': { phase: 3, title: 'Planning & Structure', week: 'Week 3', focus: 'Blueprint & Strategy' },
+                'sketching-wireframes-ideation': { phase: 4, title: 'Design', week: 'Week 4', focus: 'Visualizing Solutions' },
+                'prototyping-section': { phase: 4, title: 'Design', week: 'Week 4', focus: 'Visualizing Solutions' },
+                'user-testing-iteration-section': { phase: 5, title: 'Testing & Iteration', week: 'Week 5', focus: 'Refining & Validating' },
+                'team-collaboration-handoff': { phase: 5, title: 'Handoff', week: 'Phase 5', focus: 'Project Handoff' }, // Week text adjusted
+                'addressing-issues': { phase: 5, title: 'Solutions Overview', week: 'Post-Phase 5', focus: 'A look at the solutions.' }, // No specific phase num, but show card
+                'launch-future-considerations-section': { phase: 5, title: 'Launch & Future', week: 'Post-Phase 5', focus: 'Wrapping up and looking ahead.' } // No specific phase num
+            };
+
+            const sectionsToObserve = Object.keys(sectionPhaseData).map(id => document.getElementById(id)).filter(el => el != null);
+            let lastActivePhaseNum = null;
+
+            // Function to handle scroll to section
+            function scrollToSection(phaseNum) {
+                let targetSectionId = null;
+                for (const sectionId in sectionPhaseData) {
+                    if (sectionPhaseData[sectionId] && sectionPhaseData[sectionId].phase === phaseNum) {
+                        targetSectionId = sectionId;
+                        break; // Found the first section for this phase
+                    }
+                }
+
+                if (targetSectionId) {
+                    const targetElement = document.getElementById(targetSectionId);
+                    if (targetElement) {
+                        targetElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            }
+
+            // Add click listeners to phase nodes
+            phaseNodes.forEach(node => {
+                node.addEventListener('click', function() {
+                    const phaseNum = parseInt(this.getAttribute('data-phase'), 10);
+                    scrollToSection(phaseNum);
+                });
+            });
+
+            const observer = new IntersectionObserver(entries => {
+                let currentSectionData = null;
+                let maxRatio = 0;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        currentSectionData = sectionPhaseData[entry.target.id];
+                    }
+                });
+
+                if (currentSectionData) {
+                    navigator.classList.add('csn-visible');
+                    spotlightCard.classList.add('csn-visible');
+                    document.body.classList.add('chrono-nav-active'); // Push main content
+                    
+                    spotlightTitle.textContent = currentSectionData.title;
+                    if (currentSectionData.phase) { // Add Phase number if it exists
+                        spotlightTitle.textContent = `Phase ${currentSectionData.phase}: ${currentSectionData.title}`;
+                    }
+                    spotlightWeek.textContent = currentSectionData.week;
+                    spotlightFocus.textContent = currentSectionData.focus;
+
+                    phaseNodes.forEach(node => node.classList.remove('csn-active-node'));
+                    
+                    let targetNode = null;
+                    if (currentSectionData.phase) {
+                        targetNode = phaseNodes[currentSectionData.phase - 1];
+                        if (targetNode) {
+                            targetNode.classList.add('csn-active-node');
+                            lastActivePhaseNum = currentSectionData.phase;
+                        }
+                    } else if (lastActivePhaseNum) {
+                        // If current section has no phase, keep marker at last known active phase node
+                        targetNode = phaseNodes[lastActivePhaseNum - 1];
+                         // No need to add csn-active-node as it's not this phase, but we use its pos
+                    } else {
+                        // Default to middle if no phase context ever existed (e.g. for Solutions/Launch if they are first)
+                        targetNode = phaseNodes[Math.floor(phaseNodes.length / 2)];
+                    }
+
+                    if (targetNode) {
+                        const trackRect = track.getBoundingClientRect();
+                        const nodeRect = targetNode.getBoundingClientRect();
+                        // Position marker at the center of the target node, relative to the track's top
+                        let markerTop = (nodeRect.top - trackRect.top) + (nodeRect.height / 2) - (marker.offsetHeight / 2);
+                        marker.style.top = `${markerTop}px`;
+                        // Position spotlight card vertically centered with the marker
+                        spotlightCard.style.top = `${markerTop - (spotlightCard.offsetHeight / 2) + (marker.offsetHeight / 2)}px`;
+                    }
+
+                } else {
+                    // No specific section is dominant, or it's a section that should hide the navigator
+                    // Check if any section that *should* show data is in view at all before hiding everything
+                    let anyRelevantSectionVisible = false;
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting && sectionPhaseData[entry.target.id] !== null) {
+                            anyRelevantSectionVisible = true;
+                        }
+                    });
+
+                    if (!anyRelevantSectionVisible) {
+                        navigator.classList.remove('csn-visible');
+                        spotlightCard.classList.remove('csn-visible');
+                        document.body.classList.remove('chrono-nav-active'); // Reclaim main content space
+                        phaseNodes.forEach(node => node.classList.remove('csn-active-node'));
+                    }
+                }
+            }, { threshold: 0.1, rootMargin: "-40% 0px -40% 0px" }); // Adjust rootMargin to ensure only one section is dominant
+
+            sectionsToObserve.forEach(section => {
+                if (section) observer.observe(section);
+            });
+        });
+    </script>
+    <script>
+        // Metrics Toggle Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const showOriginalBtn = document.getElementById('showOriginalMetricsBtn');
+            const showRedesignedBtn = document.getElementById('showRedesignedMetricsBtn');
+            const originalMetricsContainer = document.getElementById('originalMetricsContainer');
+            const redesignedMetricsContainer = document.getElementById('redesignedMetricsContainer');
+
+            if (showOriginalBtn && showRedesignedBtn && originalMetricsContainer && redesignedMetricsContainer) {
+                showOriginalBtn.addEventListener('click', function() {
+                    originalMetricsContainer.classList.remove('metrics-set-hidden');
+                    redesignedMetricsContainer.classList.add('metrics-set-hidden');
+                    showOriginalBtn.classList.add('active');
+                    showRedesignedBtn.classList.remove('active');
+                });
+
+                showRedesignedBtn.addEventListener('click', function() {
+                    redesignedMetricsContainer.classList.remove('metrics-set-hidden');
+                    originalMetricsContainer.classList.add('metrics-set-hidden');
+                    showRedesignedBtn.classList.add('active');
+                    showOriginalBtn.classList.remove('active');
+                });
+            }
+        });
+    </script>
+    <script>
+        // Sticky Portfolio Nav Active Link Logic
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('#sticky-portfolio-nav ul li a');
+            const sections = [];
+            navLinks.forEach(link => {
+                const sectionId = link.getAttribute('href').substring(1);
+                const section = document.getElementById(sectionId);
+                if (section) {
+                    sections.push(section);
+                }
+            });
+
+            if (sections.length === 0) return;
+
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.4 // Section is 40% visible to be considered active
+            };
+
+            let currentActiveSectionId = null;
+
+            const intersectionObserver = new IntersectionObserver((entries) => {
+                let mostVisibleEntry = null;
+                let maxRatio = 0;
+
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > maxRatio) {
+                        maxRatio = entry.intersectionRatio;
+                        mostVisibleEntry = entry;
+                    }
+                });
+                
+                let activeSectionId = null;
+                if (mostVisibleEntry) {
+                    activeSectionId = mostVisibleEntry.target.id;
+                } else {
+                    // If no section is meeting the threshold, try to find the one closest to the top of the viewport
+                    let closestSection = null;
+                    let minDistanceToTop = Infinity;
+
+                    sections.forEach(section => {
+                        const rect = section.getBoundingClientRect();
+                        // Consider sections that are at least partially in the viewport or just above it
+                        if (rect.bottom > 0 && rect.top < window.innerHeight) {
+                            const distance = Math.abs(rect.top);
+                            if (distance < minDistanceToTop) {
+                                minDistanceToTop = distance;
+                                closestSection = section;
+                            }
+                        }
+                    });
+                    if (closestSection) {
+                        activeSectionId = closestSection.id;
+                    }
+                }
+
+
+                if (activeSectionId && activeSectionId !== currentActiveSectionId) {
+                    currentActiveSectionId = activeSectionId;
+                    navLinks.forEach(link => {
+                        link.classList.remove('active-nav-link');
+                        if (link.getAttribute('href') === `#${activeSectionId}`) {
+                            link.classList.add('active-nav-link');
+                        }
+                    });
+                }
+            }, observerOptions);
+
+            sections.forEach(section => {
+                intersectionObserver.observe(section);
+            });
+            
+            // Ensure sticky nav is visible when page loads if not at the very top
+            const stickyNav = document.getElementById('sticky-portfolio-nav');
+            if (window.scrollY > document.querySelector('header.hero').offsetHeight) {
+                // This logic might need adjustment depending on desired hide/show behavior
+                // For now, it's always sticky once the hero is passed.
+            }
+
+        });
     </script>
 </body>
 </html> 
