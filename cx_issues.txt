@@ -1,0 +1,36 @@
+Lack of Awareness of Campus Events
+
+Students don’t know what events are happening, even though they’re listed in the app.
+
+The Events page is underused despite being frequently updated.
+
+Disjointed Access to Academic Support
+
+Before Navigate360, students had to access multiple disconnected systems for help.
+
+This created friction in finding advisors, scheduling appointments, or tracking progress.
+
+Inconsistent or Interrupted Digital Service Delivery
+
+Issues like the digital ID system going down disrupt student routines.
+
+There is a need for real-time troubleshooting and system resilience.
+
+Invisible, Friction-Filled Systems
+
+Students often don’t realize they’re interacting with multiple services (e.g., ID scanning, scheduling).
+
+The goal is to make those interactions seamless and intuitive.
+
+Low Engagement With Support Tools
+
+Students aren’t engaging with all the digital support tools available to them.
+
+There’s a need for better onboarding, UX clarity, or proactive communication.
+
+Digital to Physical Disconnect
+
+One of the biggest goals is bridging the gap between the digital experience (apps, alerts) and real-world action (attending events, visiting support centers).
+
+Volin’s vision is to guide students from information to in-person participation.
+

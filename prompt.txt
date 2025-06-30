@@ -1,0 +1,77 @@
+## STEP 1: UPDATE HOMEPAGE COPY
+
+**Replace the opening heading and intro with something more CX-focused.**
+
+> Old: "UX Research Portfolio – Jalen Banks"  
+> New: "Customer Experience Strategy & UX Leadership – Jalen Banks"
+
+**New tagline below:**  
+> "I design and improve digital experiences by combining research, journey mapping, and customer insight. I help teams prioritize service improvements that drive satisfaction and adoption."
+
+---
+
+## STEP 2: ADD A NEW SECTION TO HOMEPAGE
+
+Create a new section called **“CX Strategy Highlights”** near the top with 3 bullet points:
+
+• Improved feature adoption by 15% by identifying friction in onboarding via journey mapping (QCC Connect)  
+• Delivered VoC dashboards and reports that helped leadership prioritize features with 20% higher engagement  
+• Reduced user churn by 18% through targeted CX improvements and A/B testing
+
+---
+
+## STEP 3: REFINE CASE STUDY HEADINGS
+
+Update each case study title to reflect CX impact. Examples:
+
+**Old:** "QCC Connect"  
+**New:** "QCC Connect – Improving Student Onboarding Through CX Analytics"
+
+**Old:** "Radical – Inclusive Social App"  
+**New:** "Radical – Prioritizing Feature Rollout Based on Customer Insight"
+
+---
+
+## STEP 4: REWRITE CASE STUDY BODY COPY
+
+Use these guidelines in each case study:
+
+- Add a short **summary paragraph at the top** that states the goal, your role, and the outcome (with metrics)  
+- Add CX language: use “customer journey,” “user touchpoints,” “VoC,” “service improvement,” “experience optimization”  
+- Highlight tools: Tableau, SQL, Excel, PowerPoint, Figma, Jira, FlutterFlow  
+- Use bold or bullet lists to show measurable outcomes  
+
+---
+
+## STEP 5: OPTIONAL SECTION – REPORTING SAMPLES
+
+If not already included, create a new section:
+
+**Title:** “Reporting & Insight Samples”  
+Embed/link to:  
+- Tableau dashboards (screenshots or dummy links)  
+- VoC insight slides (PDF or Google Slides mockup)  
+- Journey map or touchpoint blueprint
+
+---
+
+## STEP 6: TOOL STACK UPDATE
+
+Add a “Tools & Methods” section (or sidebar) with:
+- Tableau, Excel, SQL (Snowflake), PowerPoint, Figma, Jira, Git, Lean Six Sigma (exposure), VoC tools
+
+---
+
+## STEP 7: CLEAN NAVIGATION
+
+If possible, update the nav bar to include:
+
+• Home  
+• CX Strategy  
+• Case Studies  
+• Reporting Samples  
+• About / Contact
+
+---
+
+## Final Output:

@@ -1,0 +1,229 @@
+PRESENTATION SCRIPT - TEN TRAVEL GROUP CEO
+============================================
+
+OPENING (2-3 minutes)
+---------------------
+"Good [morning/afternoon], I'm Jalen Banks, and I'm excited to share how my customer experience strategy background can drive value for Ten Travel Group.
+
+Today I'll walk you through five key areas:
+1. My holistic approach to CX strategy that combines data with human empathy
+2. My research methodology and how I gather actionable insights
+3. Specific case studies showing measurable impact
+4. How I translate customer emotions into business results
+5. How my skills align with Ten Travel Group's needs
+
+Let me start by showing you my executive summary..."
+
+[SCROLL TO HERO SECTION]
+
+EXECUTIVE SUMMARY (1 minute)
+---------------------------
+"Here you can see my core value proposition: I combine customer research, journey mapping, and data analytics to identify opportunities that drive both customer satisfaction and business growth.
+
+My approach focuses on three pillars:
+- Understanding customer pain points through research
+- Mapping the full customer journey to identify friction
+- Using data to prioritize improvements that deliver ROI
+
+Let me show you how this translates to real business impact..."
+
+[SCROLL TO CX STRATEGY HIGHLIGHTS]
+
+CX STRATEGY HIGHLIGHTS (2 minutes)
+---------------------------------
+"These metrics demonstrate my track record of driving measurable business outcomes:
+
+• 15% improvement in feature adoption through onboarding optimization
+• 20% higher engagement through VoC-driven feature prioritization  
+• 18% reduction in user churn through targeted CX improvements
+
+Each of these represents real revenue impact - whether through increased usage, higher retention, or improved conversion rates.
+
+Now let me show you my holistic approach to customer experience..."
+
+[SCROLL TO HOLISTIC CX APPROACH SECTION]
+
+HOLISTIC CX APPROACH (3-4 minutes)
+---------------------------------
+"This section is particularly important because it shows how I think beyond just metrics to understand the human experience.
+
+[POINT TO HUMAN-CENTERED APPROACH]
+My philosophy is that data tells us what happened, but emotions tell us why it matters. I combine quantitative insights with qualitative understanding to design experiences that resonate on a human level.
+
+[SCROLL TO EMOTIONAL JOURNEY MAPPING]
+Here you can see how I map emotional states throughout the customer journey - from frustration to delight, anxiety to confidence. Understanding these emotional peaks and valleys helps identify opportunities to transform negative experiences into positive ones.
+
+[POINT TO USER QUOTES]
+These user quotes are powerful because they reveal the emotional reality behind the data. For example, when a student says 'I felt so lost and frustrated trying to find my class schedule,' that's not just a usability issue - it's an emotional experience that impacts their entire relationship with the institution.
+
+[SCROLL TO EMOTIONAL JOURNEY VISUALIZATION]
+This emotional journey visualization shows our goal: transforming the entire experience from frustration to delight. In travel, this is especially crucial because customers are often in vulnerable states - they're spending significant money, planning important trips, and need to feel confident and supported.
+
+[POINT TO KEY EMOTIONAL INSIGHTS]
+I've identified three key emotional drivers that are universal across industries:
+- Fear of Missing Out: Customers worry about missing important opportunities
+- Need for Validation: They want confirmation they're making the right choices  
+- Desire for Control: Feeling in control reduces anxiety and builds confidence
+
+These insights are particularly relevant for Ten Travel Group, where customers are making significant financial and time investments..."
+
+[SCROLL TO RESEARCH METHODOLOGY SECTION]
+
+RESEARCH STRATEGY & METHODOLOGY (2-3 minutes)
+---------------------------------------------
+"Let me take a moment to explain my research approach, because understanding how I gather insights is crucial to understanding the quality of my recommendations.
+
+[POINT TO RESEARCH PHILOSOPHY]
+I believe in a mixed-methods approach that combines the depth of qualitative research with the breadth of quantitative data. This gives us both the 'why' and the 'what' - the emotional drivers and the behavioral patterns.
+
+[SCROLL TO RESEARCH METHODS]
+My research strategy follows a three-phase approach:
+
+**Phase 1: Discovery & Exploration**
+I start with broad exploratory research to understand the landscape. This includes:
+- Competitive analysis to understand market positioning
+- User reviews and feedback analysis to identify pain points
+- Stakeholder interviews to understand business objectives
+- Heuristic evaluations to assess current experience quality
+
+**Phase 2: Deep-Dive Qualitative Research**
+This is where I get into the human experience:
+- One-on-one user interviews (typically 15-20 participants)
+- Contextual inquiry sessions to observe real usage
+- Journey mapping workshops with key stakeholders
+- Emotional journey mapping to understand feelings at each touchpoint
+
+**Phase 3: Validation & Quantification**
+Finally, I validate insights with broader data:
+- Surveys with larger sample sizes (100+ participants)
+- Analytics data analysis to confirm patterns
+- A/B testing to validate hypotheses
+- Usability testing to refine solutions
+
+[POINT TO RESEARCH RIGOR]
+What makes my research approach effective is the rigor I apply to each phase. For example, in the QCC Connect project, I conducted 18 in-depth interviews with students across different demographics, analyzed over 200 user reviews, and mapped the complete emotional journey from initial awareness to daily usage.
+
+[POINT TO INSIGHTS TRANSLATION]
+But research is only valuable if it translates to action. I create clear research artifacts - journey maps, personas, opportunity matrices - that help teams understand not just what users want, but why they want it and how it impacts the business.
+
+This methodology ensures that every recommendation I make is grounded in real user needs and validated through multiple research methods..."
+
+[SCROLL TO ANALYTICS SHOWCASE]
+
+DATA-DRIVEN STRATEGY (2 minutes)
+--------------------------------
+"Now let me show you how I translate these emotional insights into actionable business intelligence.
+
+[POINT TO EXECUTIVE ANALYTICS OVERVIEW]
+So I like to create comprehensive dashboards and reports that help leadership make data-driven decisions about customer experience investments. But what's unique about my approach is that I connect the quantitative data to the qualitative insights we just discussed.
+
+[SCROLL THROUGH DASHBOARD TYPES]
+These dashboards track everything from customer satisfaction to feature adoption, but they're designed to answer the 'why' questions that drive strategic decisions.
+
+[POINT TO DASHBOARD LINK]
+I've created a comprehensive analytics dashboard that you can explore - it shows how I combine emotional journey mapping with traditional metrics to create a complete picture of the customer experience..."
+
+[SCROLL TO FIRST CASE STUDY]
+
+CASE STUDY 1: QCC CONNECT (3-4 minutes)
+---------------------------------------
+"This project perfectly illustrates my holistic approach to CX strategy. The goal was to improve student onboarding at Queensborough Community College.
+
+[POINT TO PROJECT SUMMARY]
+My role was to lead the research, identify pain points, and design solutions that would increase adoption and reduce support calls.
+
+[SCROLL THROUGH IMAGES]
+Through customer journey mapping, I discovered that students were getting lost in the onboarding process. But more importantly, I understood the emotional impact - they felt overwhelmed, frustrated, and anxious about missing important deadlines.
+
+[POINT TO OUTCOMES]
+The results speak for themselves: 15% improvement in feature adoption and a significant reduction in support tickets. But the real success was in the emotional transformation - students went from feeling 'lost and frustrated' to feeling 'supported and confident.'
+
+What's most relevant for Ten Travel Group is how this approach could apply to your customer booking and travel planning process..."
+
+[SCROLL TO SECOND CASE STUDY]
+
+CASE STUDY 2: BRIDGING DIGITAL-PHYSICAL GAP (3-4 minutes)
+---------------------------------------------------------
+"This case study is particularly relevant to the travel industry, where digital and physical experiences must seamlessly connect.
+
+[POINT TO PROJECT SUMMARY]
+Through interviews with key stakeholders, I identified critical gaps between the digital app experience and on-campus services.
+
+[SCROLL THROUGH IMAGES]
+The solution involved creating a unified experience that bridged these gaps - something that's crucial in travel where customers interact with both your digital platforms and physical locations like airports, hotels, and destinations.
+
+[POINT TO OUTCOMES]
+The result was improved customer satisfaction and reduced friction points - exactly what you need when customers are navigating complex travel experiences. But beyond the metrics, we created emotional confidence - customers felt supported throughout their entire journey.
+
+This demonstrates my ability to think holistically about the customer experience across all touchpoints..."
+
+[SCROLL TO TOOLS & METHODS]
+
+TOOLS & METHODS (1-2 minutes)
+-----------------------------
+"Let me quickly show you my technical toolkit. I use a combination of analytics tools like Tableau and SQL for data-driven insights, design tools like Figma for prototyping solutions, and project management tools like Jira to ensure smooth execution.
+
+What's important is that I can translate complex data into actionable business recommendations that leadership can understand and act on.
+
+Now, let me address why I'm specifically excited about Ten Travel Group..."
+
+[SCROLL TO "WHY I'M A FIT" SECTION]
+
+WHY I'M A FIT FOR TEN TRAVEL GROUP (2-3 minutes)
+------------------------------------------------
+"Based on your job posting, I see three key areas where my background aligns perfectly:
+
+1. **Holistic Customer Journey Optimization**: My experience mapping both functional and emotional customer journeys directly applies to travel experiences where customers interact with multiple touchpoints and experience a wide range of emotions.
+
+2. **Data-Driven Decision Making with Human Insight**: I can help you leverage both customer data and emotional insights to prioritize improvements that drive both satisfaction and revenue.
+
+3. **Cross-Functional Leadership**: I've worked with engineering, design, and business teams to implement CX improvements - exactly what you need for your product team.
+
+The travel industry is undergoing massive digital transformation, and I can help Ten Travel Group navigate this while maintaining the human touch that makes travel special. My holistic approach ensures we don't lose sight of the emotional journey that makes travel memorable..."
+
+CLOSING (1-2 minutes)
+---------------------
+"To summarize, I bring a proven track record of driving measurable business impact through customer experience strategy. But what sets me apart is my holistic approach that combines data-driven insights with deep understanding of human emotions and needs.
+
+I can help Ten Travel Group:
+
+- Identify and prioritize the most impactful CX improvements based on both metrics and emotional insights
+- Bridge the gap between customer data and human experience to create truly exceptional journeys
+- Lead cross-functional teams to implement solutions that drive both satisfaction and growth
+- Create emotional connections that turn customers into advocates
+
+I'm excited about the opportunity to bring this human-centered, data-driven approach to Ten Travel Group and help you create exceptional customer experiences that drive business success.
+
+I'd love to discuss how my background could translate to your specific challenges and opportunities. What questions do you have about my approach or experience?"
+
+[PAUSE FOR QUESTIONS]
+
+KEY TALKING POINTS FOR Q&A
+--------------------------
+• Emphasize the balance between quantitative data and qualitative insights
+• Be ready to discuss specific travel industry emotional challenges (anxiety about bookings, excitement about trips, stress about logistics)
+• Have examples of how emotional insights drove business decisions
+• Mention experience with customer data and analytics
+• Be prepared to discuss how you'd approach their specific product challenges
+• Highlight the importance of emotional journey mapping in travel
+• Be ready to explain your research methodology and how it ensures quality insights
+• Have examples of how your mixed-methods approach has uncovered unexpected insights
+
+REMEMBER:
+- Keep focus on business value, not just design
+- Use travel industry analogies when possible
+- Emphasize measurable outcomes
+- Show enthusiasm for the travel industry
+- Be ready to discuss specific Ten Travel Group challenges
+- Highlight the human/emotional side of customer experience
+
+PRESENTATION TIPS
+-----------------
+• Practice the timing - aim for 20-22 minutes total (increased due to research methodology section)
+• Have your portfolio open and ready to navigate
+• Test your screen sharing before the call
+• Have backup screenshots ready in case of technical issues
+• Prepare 2-3 specific questions to ask about Ten Travel Group's challenges
+• Follow up with a thank you email and portfolio link within 24 hours
+• Be ready to discuss specific emotional pain points in travel booking/planning
+• Have examples ready of how your research methodology has driven business decisions
