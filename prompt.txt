@@ -1,0 +1,19 @@
+Rewrite this UX portfolio case study to reflect the standards of a mid-level or senior Product Designer. Use Vincent Qing’s Uber People Tech case study as a reference for structure, hierarchy, and visual storytelling: https://www.vincentqing.com/project/uber-people-tech
+
+Apply the following principles to the rewrite:
+
+1. **Remove unnecessary wireframes and timeline sections**: Skip product process overviews or wireframe-heavy slides unless they are critical to a unique decision-making moment.
+
+2. **Focus on the final product**: Lead with polished high-fidelity mockups and prototypes. Replace static screen carousels with embedded animated prototypes or walkthroughs that tell a cohesive story.
+
+3. **Clarify my role and strengths**: Position me clearly as either a UX Researcher or a UX Designer (choose the one that aligns more with the content). Use a concise intro like:
+   _“I am a data-driven UX Designer with experience in [industry]. I collaborate closely with researchers and engineers to build usable, impactful solutions.”_
+
+4. **Fix all UI/UX bugs and technical glitches**: Ensure tabs, filters, and interactive elements work smoothly across browsers and devices.
+
+5. **Avoid cookie-cutter structure**: Improve information hierarchy so the most impactful visuals and insights are prioritized. Structure the story naturally instead of forcing it into common templates.
+
+6. **Refine storytelling**: Make the narrative more engaging and personalized. Use ChatGPT/Perplexity-style tone for clarity and confidence without filler jargon. Let the project speak for itself with supporting decisions.
+
+Deliver the output as a redesigned portfolio case study section using modern layout and tone, suitable for experienced hiring managers.
+
